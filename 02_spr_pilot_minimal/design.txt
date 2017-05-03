@@ -1,0 +1,42 @@
+## Motivation
+
+This pilot uses a minimal design. Its purpose is to get familiar with SPR-tasks administered through the web. We do not necessarily expect theoretically interesting results. We'd like to inspect the data with respect to several technical questions:
+
+- length of the experiment 
+	- too short, too long? fatigue?
+	- difference of answer patterns start/middle/end of experiment
+- any differences in RT on color word as a function of quantifier and picture at all?
+- how noisy is the data?
+- performance on truth-value judgement task?
+	- correlation with entropy of RT data?
+
+## Design
+
+### Trial structure
+
+Each trial is structured like this:
+
+- show a picture for X ms (start with X = 1000; adjust later)
+- under the picture already visible from the start are lines (underscores) where the words of the target sentence will appear
+- after the picture disappeared show "Click SPACE to start" on top of sentence / lines
+- on SPACE, show first word and have "Click SPACE to start" disappear
+- repeated SPACE hits, reveal next word and hide previous
+- after SPACE on the last word: show truth-value judgement question ("Sentence true/false description of picture")
+
+### Picture material
+
+Pictures show 10 circles in a box. Each circle is either black or white. For each trial, we have a *target color*. We identify pictures with respect to the number of circles of the target color (0, ..., 10). There are therefore 11 types of pictures.
+
+Pictures are generated on the fly with circles arranged randomly in the box.
+
+### Sentence material
+
+All sentence are of the form:
+
+"{some/all/none/most} of the circles are {black/white} in this picture"
+
+### Procedure ( = trial sequences)
+
+There are 44 picture type + sentence type combinations. Each participant sees all 44 conditions exactly once in random order. Half of the trials have target color "white", the others have target color "black". The target color on each trial is selected at random.
+
+[Implementation note: make a random shuffle of target color; and an independent random shuffle of all 44 conditions.]
