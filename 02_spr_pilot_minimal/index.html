@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<!-- dependencies -->
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/mustache.js/mustache.min.js"></script>
+		<!-- dependencies -->
+
+		<script src="main.js"></script>
+		<script src="js/trial.js"></script>
+		<script src="js/exp.js"></script>
+		<script src="js/circle.js"></script>
+		<script src="js/canvas.js"></script>
+	</head>
+	<body>
+		<main id="main">
+		Loading...
+		</main>
+		<script id="intro-templ" type="x-tmpl-mustache">
+			<div id="intro-templ">
+				<h1>Stanford CoCoLab</h1>
+				<article>
+					<p>Thank you for participating in our study. In this study, you will read XXX sentences that describe images and answer questions about them.</p>
+					<p><strong>Legal information: </strong>By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact Judith Degen at jdegen@stanford.edu or Noah Goodman at ngoodman@stanford.edu. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
+				</article>
+				<button type="submit" id="start-exp-btn">start experiment</button>
+			</div>
+		</script>
+		<script id="trial-templ" type="x-tmpl-mustache">
+			<div id="trial-templ">
+				<aside>progrss bar</aside>
+				<section>
+					<canvas id="canvas" height="350" width="500"></canvas>
+				</section>
+				<section class="sentence">
+					<p class="hidden instructions">click SPACE to start</p>
+					<p>
+						<span class="spr-word">This</span>
+						<span class="spr-word">is</span>
+						<span class="spr-word">a</span>
+						<span class="spr-word">sample</span>
+						<span class="spr-word">sentence.</span>
+					</p>
+				</section>
+				<section class="question no-display">
+					<p>Did the sentence truthfully describle the picture?</p>
+					<label for="yes">Yes</label>
+					<input id="yes" type="radio" name="answer" value="yes"/>
+					<input id="no" type="radio" name="answer" value="no"/>
+					<label for="no">No</label>		
+					<button type="submit" class="continue-btn no-display">continue</button>
+				</section>
+			</div>
+		</script>
+	</body>
+</html>

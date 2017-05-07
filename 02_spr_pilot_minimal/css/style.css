@@ -1,0 +1,39 @@
+canvas {
+	background: #95C1C4;
+	margin: 20px;
+}
+
+.no-display {
+	display: none;
+}
+
+.display {
+	display: block;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.spr-word {
+	margin: 0 3px;
+	position: relative;
+	visibility: hidden;
+}
+
+.spr-word:after {
+	height: 1px;
+	width: 100%;
+	background: black;
+	display: inline-block;
+	content: "";
+	visibility: visible;
+
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.visible {
+	visibility: visible;
+}
