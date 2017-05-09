@@ -3,8 +3,6 @@ var exp  = {
 	circleNumber: 10,
 	quantifierNumber: 4,
 	sentence: {
-		part1: " of the balls are ",
-		part2: " in the picture",
 		quantifier: ["Some", "All", "None", "Most"]
 	}
 };
@@ -14,6 +12,7 @@ exp.getPictureNumber = function() {
 	return exp.circleNumber;
 };
 
+// func that returns a list of objects representing every picture type
 exp.generatePictureTypes = function() {
 	number = exp.getPictureNumber();
 	var types = [];
@@ -23,7 +22,7 @@ exp.generatePictureTypes = function() {
 	return types;
 };
 
-// make picture - quantifier - colour combinations
+// fun that creates picture - quantifier - colour combinations
 // returns a list of objects
 // every object contains num of black circles, num of all circles
 // target colour and quantifier
@@ -41,21 +40,13 @@ exp.generatePQCComb = function() {
 			});
 		};
 	};
-	// add the colours 
+
+	// add the colours
 	for (var i = 0; i < combinations.length; i++) {
-		var step = 4; // exp.circleNumber / exp.quantifierNumber
-		if (i < (combinations.length/2)) {
-			if ((i % step === 0) || (((i - 1) % step) === 0)) {
-				combinations[i].colour = "black";
-			} else {
-				combinations[i].colour = "white";
-			};
+		if ((i % 2) === 0) {
+			combinations[i].colour = "black";
 		} else {
-			if ((i % step === 0) || (((i - 1) % step) === 0)) {
-				combinations[i].colour = "white";
-			} else {
-				combinations[i].colour = "black";
-			};
+			combinations[i].colour = "white";			
 		}
 	};
 	return combinations;
@@ -63,6 +54,7 @@ exp.generatePQCComb = function() {
 
 
 // func shuffles the list of PQC objects
+// returns a shuffled list of PQC objects
 exp.shufflePQCComb = function() {
 	var arr = exp.generatePQCComb();
 	var counter = arr.length;
@@ -79,7 +71,7 @@ exp.shufflePQCComb = function() {
 	return arr;
 };
 
-// func that creates the exp
+// func creates an exp
 exp.init = function() {
 	return exp.shufflePQCComb();
 };

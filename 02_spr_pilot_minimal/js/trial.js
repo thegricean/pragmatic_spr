@@ -1,15 +1,26 @@
-var picture = {
+/*var picture = {
 	hide: function() {
-		$('#canvas').addClass("hidden");
-		instructions.show();
-		sentence.spaceClicked();
-	},
+/*		$('#canvas').addClass("hidden");
+*/		/*instructions.show();
+		sentence.spaceClicked();*/
+/*	},
 	display: function(ms) {
-		canvas.draw(4, 500, 350);
-		setTimeout(picture.hide, 1000);
+		setTimeout(picture.hide, ms);
 	}
-};
+};*/
 
+var initImage = function(ms) {
+	image = {};
+	hide = function() {
+		$('#canvas').addClass("hidden");
+	};
+	image.display = function(ms) {
+		setTimeout(hide, ms);
+	};
+
+	return image;
+};
+/*
 var instructions = {
 	show: function() {
 		$('.instructions').removeClass('hidden');
@@ -17,9 +28,64 @@ var instructions = {
 	hide: function() {
 		$('.instructions').addClass('hidden');
 	}
+};*/
+
+var initSentence = function() {
+	var sentence = {};
+	var currentWord = -1;
+
+	var createElem = function(text) {
+		var element = '<span class="spr-word">'.concat(text, '</span>');
+		var containter = $('#sentence-cont');
+		$(element).appendTo($('#sentence-cont'));
+	};
+
+
+	sentence.pickTargetWord = function() {
+		var words = $('.spr-word').toArray();
+
+		currentWord++;
+		if (currentWord < words.length){
+			$(words[currentWord]).addClass('visible');
+			$(words[currentWord -1]).removeClass('visible');
+		}
+		else {
+			$(words[currentWord -1]).removeClass('visible');
+			question.show();
+		}
+	};
+
+	var createSentence = function(quantifier, colour) {
+		var wordList = createWordList(quantifier, colour);
+		for (var i = 0; i < wordList.length; i++) {
+			wordList[i]
+		}
+	};
+
+	var createWordList = function(quantifier, colour) {
+		// a list of the sentence's words
+		var sentence = (
+			quantifier.concat(" of the balls are ", colour, " in the picture."))
+		.split(/[ ,]+/);
+
+		return sentence;
+	};
+
+	sentence.appendDOMElems = function(quantifier, colour) {
+		var arr = createWordList(quantifier, colour);
+		// crates a dom element for every item from that list
+		for (var i = 0; i < arr.length; i++) {
+			createElem(arr[i]);
+		};
+	};
+
+	return sentence;
 };
 
-var sentence = {
+/**/
+
+
+/*var sentence = {
 	currentWord: -1,
 	showWord: function() {
 		instructions.hide();
@@ -33,20 +99,12 @@ var sentence = {
 			$(words[this.currentWord -1]).removeClass('visible');
 			question.show();
 		}
-	},
-	spaceClicked: function() {
-		$('body').on("keyup", function(e) {
-			if (e.which == 32) {
-				sentence.showWord();
-			}
-		});
 	}
-};
+};*/
 
 var question = {
 	show: function() {
 		$('.question').removeClass('no-display');
-		console.log('question displayed!');
 		nextTrial.showContinueBtn();
 		nextTrial.go();
 	}
