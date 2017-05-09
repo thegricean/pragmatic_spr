@@ -1,7 +1,110 @@
 canvas {
 	background: #95C1C4;
-	margin: 20px;
 }
+
+h1 {
+	color: #111;
+	font-family: "Merriweather", serif;
+}
+
+p,
+button {
+	color: #111;
+	font-family: "Lato", sans-serif;
+	font-size: 16px;
+}
+
+button {
+	cursor: pointer;
+}
+
+p.big {
+	font-size: 20px;
+}
+
+.intro-templ,
+.trial-templ {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	max-width: 760px;
+	margin: 50px auto;
+}
+
+
+/* start trial slide styles */
+.trial-templ {
+	position: relative;
+}
+
+.trial-templ aside {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.trial-templ p {
+	margin: 15px;
+}
+
+.trial-templ .sentence {
+	margin: 20px 0;
+}
+
+.trial-templ .instructions {
+	text-align: center;
+	width: auto;
+}
+
+.trial-templ .question p {
+	text-align: center;
+}
+
+.trial-templ .question input[type="radio"] {
+	display: none;
+}
+
+.trial-templ .question label {
+	cursor: pointer;
+	border-radius: 5px;
+	padding: 5px 8px;
+	margin: 0 5px;
+}
+
+.trial-templ .question label:hover {
+	background: #8a8a8a;
+	color: white;
+}
+
+.trial-templ .question #yes:checked ~ label[for="yes"],
+.trial-templ .question #no:checked ~ label[for="no"] {
+	background: #8a8a8a;
+	color: white;
+}
+
+/* end trial slide styles */
+
+/* words */
+.spr-word {
+	margin: 0 3px;
+	position: relative;
+	visibility: hidden;
+}
+
+/* word underline */
+.spr-word:after {
+	height: 1px;
+	width: 100%;
+	background: #111;
+	display: inline-block;
+	content: "";
+	visibility: visible;
+
+	position: absolute;
+	bottom: -3px;
+	left: 0;
+}
+
 
 .no-display {
 	display: none;
@@ -13,25 +116,6 @@ canvas {
 
 .hidden {
 	visibility: hidden;
-}
-
-.spr-word {
-	margin: 0 3px;
-	position: relative;
-	visibility: hidden;
-}
-
-.spr-word:after {
-	height: 1px;
-	width: 100%;
-	background: black;
-	display: inline-block;
-	content: "";
-	visibility: visible;
-
-	position: absolute;
-	bottom: 0;
-	left: 0;
 }
 
 .visible {
