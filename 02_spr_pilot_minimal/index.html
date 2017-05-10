@@ -21,7 +21,7 @@
 		Loading...
 		</main>
 		<script id="intro-templ" type="x-tmpl-mustache">
-			<div id="intro-templ" class="intro-templ">
+			<div class="intro-templ">
 				<img class="logo" src="../_shared/images/cocologo.png" alt="CoCoLab Logo" height="125" width="250" />
 				<h1>Stanford CoCoLab</h1>
 				<article>
@@ -31,15 +31,34 @@
 				<button type="submit" id="start-exp-btn">start experiment</button>
 			</div>
 		</script>
+		<script id="instructions-templ" type="x-tmpl-mustache">
+			<div class="instructions-templ">
+				<h2>This is how it works</h2>
+				<p>You'll see an image like the one below on the screen for 1 second. When the image disappears, a message will tell you to press the SPACE bar to reveal the description of the image. The description will be shown one word at a time. By pressing the SPACE bar you advance to the next word of the description. When you see the whole description, you will be asked a yes/no question about it.</p>
+				<canvas id="canvas" height="300" width="500"></canvas>
+				<button type="submit" id="continue-btn" class="continue-btn">go to practice trial</button>
+			</div>
+		</script>
+		<script id="practice-templ" type="x-tmpl-mustache">
+			<div class="practice-templ">
+				<h2>Practice Trial</h2>
+				<p>Under construction, <br />press <strong>go to experiment</strong></p>
+				<button type="submit" id="continue-btn" class="continue-btn">go to experiment</button>
+			</div>
+		</script>
 		<script id="trial-templ" type="x-tmpl-mustache">
-			<div id="trial" class="trial-templ">
+			<div class="trial-templ">
 				<aside>progrss bar</aside>
 				<section>
 					<canvas id="canvas" height="300" width="500"></canvas>
 				</section>
 				<section class="sentence">
 					<p class="hidden instructions">click <strong>SPACE</strong> to start</p>
-					<p class="big" id="sentence-cont"></p>
+					<p class="big" id="sentence-cont">
+					{{# sentence }}
+					<span class="spr-word">{{ . }}</span>
+					{{/ sentence }}
+					</p>
 				</section>
 				<section class="question no-display">
 					<p>Did the sentence truthfully describle the picture?</p>
@@ -51,6 +70,51 @@
 					</p>	
 					<button type="submit" id="continue-btn" class="continue-btn no-display">continue</button>
 				</section>
+			</div>
+		</script>
+		<script id="subj-info-templ" type="x-tmpl-mustache">
+			<div class="subj-info-templ">
+				<h2>Additional Information</h2>
+				<p>Answering the following questions is optional, but will help us understand your answers.</p>
+				<form method="post">
+					<p>
+						<label for="gender">Gender:</label>
+						<select id="gender">
+							<option></option>
+							<option value="m">male</option>
+							<option value="f">female</option>
+							<option value="o">other</option>
+						</select>
+					</p>
+					<p>
+						<label for="age">Age:</label>
+						<input type="text" id="age" />
+					</p>
+					<p>
+						<label for="education">Level of Education:</label>
+						<select id="education">
+							<option></option>
+							<option value="ghs">Graduated High School</option>
+							<option value="gc">Graduated College</option>
+							<option value="hd">Higher Degree</option>
+						</select>
+					</p>
+					<p>
+						<label for="languages">Native Languages:</label>
+						<input type="text" id="languages"/>
+						<p>(i.e. the language(s) spoken at home when you were a child)</p>
+					</p>
+					<p>
+						<textarea id="comments" placeholder="Further Comments"
+						rows="10" cols="50"></textarea>
+					</p>
+				</form>
+				<button type="submit" id="continue-btn" class="continue-btn">continue</button>
+			</div>
+		</script>
+		<script id="thanks-templ" type="x-tmpl-mustache">
+			<div class="thanks-templ">
+				<h2>Thank you!</h2>
 			</div>
 		</script>
 	</body>

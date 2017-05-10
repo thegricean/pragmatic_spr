@@ -7,6 +7,10 @@ h1 {
 	font-family: "Merriweather", serif;
 }
 
+h2 {
+	font-family: "Merriweather", sans-serif;
+}
+
 p,
 button {
 	color: #111;
@@ -16,14 +20,18 @@ button {
 
 button {
 	cursor: pointer;
+	margin: 20px auto;
 }
 
 p.big {
-	font-size: 20px;
+	font-size: 22px;
 }
 
 .intro-templ,
-.trial-templ {
+.instructions-templ,
+.practice-templ,
+.trial-templ,
+.subj-info-templ {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
@@ -31,6 +39,12 @@ p.big {
 	margin: 50px auto;
 }
 
+/* start instructions slide styles */
+.instructions-templ canvas {
+	margin: 30px auto;
+}
+
+/* end instructions slide styles */
 
 /* start trial slide styles */
 .trial-templ {
@@ -54,6 +68,14 @@ p.big {
 .trial-templ .instructions {
 	text-align: center;
 	width: auto;
+}
+
+.trial-templ .question {
+	width: 400px;
+}
+
+.trial-templ .question button {
+	margin: 30px auto 0 auto;
 }
 
 .trial-templ .question p {
@@ -83,6 +105,19 @@ p.big {
 }
 
 /* end trial slide styles */
+
+/* start subj info slide styles */
+
+.subj-info-templ form {
+	margin: 30px 0;
+}
+
+.subj-info-templ form textarea {
+	font-family: "Lato", serif;
+	font-size: 14px;
+}
+
+/* end subj info slide styles */
 
 /* words */
 .spr-word {

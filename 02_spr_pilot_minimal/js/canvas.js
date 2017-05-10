@@ -79,5 +79,9 @@ var initCanvas = function() {
 		};
 	};
 
+	canvas.hide = function() {
+		$('#canvas').addClass("hidden");
+	};
+
 	return canvas;
 };
