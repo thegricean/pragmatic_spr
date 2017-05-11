@@ -53,23 +53,19 @@ p.big {
 .instructions-templ canvas {
 	margin: 30px auto;
 }
-
 /* end instructions slide styles */
+
+.practice-templ.trial-templ {
+	margin: 30px 0;
+}
 
 /* start trial slide styles */
 canvas {
-	20px auto;
+	margin: 30px auto;
 }
 
 .trial-templ {
-	position: relative;
 	margin: 50px auto;
-}
-
-.trial-templ aside {
-	position: absolute;
-	top: 0;
-	right: 0;
 }
 
 .trial-templ p {
@@ -110,13 +106,13 @@ canvas {
 }
 
 .trial-templ .question label:hover {
-	background: #8a8a8a;
+	background: #555;
 	color: white;
 }
 
 .trial-templ .question #yes:checked ~ label[for="yes"],
 .trial-templ .question #no:checked ~ label[for="no"] {
-	background: #8a8a8a;
+	background: #555;
 	color: white;
 }
 
@@ -166,6 +162,31 @@ canvas {
 	height: 100%;
 	height: 100vh;
 }
+
+.trial-templ aside {
+	position: absolute;
+	top: 15px;
+	right: 30px;
+}
+
+/* start progress bar */
+aside span {
+	font-family: "Lato", sans-serif;
+	font-size: 0.9em;
+}
+
+.progress-bar-container {
+	border: 1px solid #555;
+	height: 20px;
+	width: 220px;
+}
+
+.filled {
+	background: #555;
+	height: 20px;
+}
+/* end progress bar */
+
 
 /* words */
 .spr-word {
