@@ -1,21 +1,30 @@
+body {
+	font-size: 66,5%;
+}
+
 canvas {
 	background: #95C1C4;
+	background: #7FAEB1;
+	background: #72A3A6;
 }
 
 h1 {
 	color: #111;
-	font-family: "Merriweather", serif;
+	font-family: "Noto Serif", serif;
+	font-size: 2.3em;
 }
 
 h2 {
-	font-family: "Merriweather", sans-serif;
+	font-family: "Noto Serif", sans-serif;
+	font-size: 1.8em;
+	margin: 10px 0;
 }
 
 p,
 button {
 	color: #111;
 	font-family: "Lato", sans-serif;
-	font-size: 16px;
+	font-size: 1.1em;
 }
 
 button {
@@ -24,7 +33,8 @@ button {
 }
 
 p.big {
-	font-size: 22px;
+	font-size: 1.3em;
+	font-weight: bold;
 }
 
 .intro-templ,
@@ -36,7 +46,7 @@ p.big {
 	display: flex;
 	flex-direction: column;
 	max-width: 760px;
-	margin: 50px auto;
+	margin: 30px auto;
 }
 
 /* start instructions slide styles */
@@ -47,8 +57,13 @@ p.big {
 /* end instructions slide styles */
 
 /* start trial slide styles */
+canvas {
+	20px auto;
+}
+
 .trial-templ {
 	position: relative;
+	margin: 50px auto;
 }
 
 .trial-templ aside {
@@ -61,8 +76,9 @@ p.big {
 	margin: 15px;
 }
 
-.trial-templ .sentence {
-	margin: 20px 0;
+.trial-templ .sentence .spr-word {
+	margin: 15px 0;
+	font-size: 1.4em;
 }
 
 .trial-templ .instructions {
@@ -112,12 +128,44 @@ p.big {
 	margin: 30px 0;
 }
 
+.subj-info-templ p {
+	display: flex;
+	flex-direction: column;
+	margin: 25px 0;
+}
+
+.subj-info-templ form input, 
+.subj-info-templ form select {
+	width: 200px;
+	max-width: 200px;
+}
+
+.subj-info-templ form label {
+	margin: 0 10px 0 0;
+}
+
+.subj-info-templ form label span {
+	font-size: 0.8em;
+}
+
 .subj-info-templ form textarea {
+	border-radius: 5px;
+	border: 1px solid #777;
 	font-family: "Lato", serif;
-	font-size: 14px;
+	font-size: 1em;
+	padding: 10px 15px;
+	margin: 5px 0 0 0;
 }
 
 /* end subj info slide styles */
+
+.begin-templ {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	height: 100vh;
+}
 
 /* words */
 .spr-word {

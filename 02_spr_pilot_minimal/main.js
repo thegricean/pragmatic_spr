@@ -7,8 +7,13 @@ var spr = {};
 spr.getNextView = function() {
 	if (this.view.name === "introduction") {
 		this.view = initInstructionsView();
-	} else if (this.view.name === "instructions") {
+		console.log("instruction view");
+	} else if (this.currentPractice < this.practice.length) {
 		this.view = initPracticeView();
+		this.currentPractice++;
+		console.log(this.currentPractice);
+	} else if (this.view.name === "practice") {
+		this.view = initBeginExpView();
 	} else if (this.currentTrial < this.exp.length) {
 		this.view = initTrialView(this.exp[this.currentTrial]);
 		this.currentTrial++;
@@ -22,5 +27,7 @@ spr.getNextView = function() {
 spr.init = function() {
 	this.view = initIntroView();
 	this.exp = exp.init();
+	this.practice = practice.init();
 	this.currentTrial = 0;
+	this.currentPractice = 0;
 };

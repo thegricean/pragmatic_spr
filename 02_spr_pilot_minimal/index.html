@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<!-- fotns -->
-		<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:400,700|Quicksand:400,700" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Merriweather:400,700|Quicksand:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|PT+Sans+Caption:400,700|PT+Sans:400,700|Lora:400,700|Noto+Serif:400,700" rel="stylesheet">  
 		<!-- css -->
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<!-- js dependencies -->
@@ -13,6 +14,7 @@
 		<script src="main.js"></script>
 		<script src="js/exp.js"></script>
 		<script src="js/views.js"></script>
+		<script src="js/practice.js"></script>
 		<script src="js/trial.js"></script>
 		<script src="js/canvas.js"></script>
 	</head>
@@ -26,7 +28,7 @@
 				<h1>Stanford CoCoLab</h1>
 				<article>
 					<p class="big">Thank you for participating in our study. In this study, you will read 44 sentences that describe images and answer questions about them.</p>
-					<p><strong>Legal information: </strong>By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact Judith Degen at jdegen@stanford.edu or Noah Goodman at ngoodman@stanford.edu. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
+					<p><strong>Legal information:<br /></strong>By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact Judith Degen at <a href="mailto:jdegen@stanford.edu">jdegen@stanford.edu</a> or Noah Goodman at <a href="mailto:ngoodman@stanford.edu">ngoodman@stanford.edu</a>.<br /><br />You must be at least 18 years old to participate.<br /><br />Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences.<br/><br />Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
 				</article>
 				<button type="submit" id="start-exp-btn">start experiment</button>
 			</div>
@@ -34,16 +36,40 @@
 		<script id="instructions-templ" type="x-tmpl-mustache">
 			<div class="instructions-templ">
 				<h2>This is how it works</h2>
-				<p>You'll see an image like the one below on the screen for 1 second. When the image disappears, a message will tell you to press the SPACE bar to reveal the description of the image. The description will be shown one word at a time. By pressing the SPACE bar you advance to the next word of the description. When you see the whole description, you will be asked a yes/no question about it.</p>
+				<p>You'll see an image like the one below on the screen for 1 second. When the image disappears, a message will tell you to press the SPACE bar to reveal the description of the image. The description will be shown one word at a time. By pressing the SPACE bar you advance to the next word of the description. After you have seen the whole description, you will be asked a yes/no question about it.</p>
 				<canvas id="canvas" height="300" width="500"></canvas>
 				<button type="submit" id="continue-btn" class="continue-btn">go to practice trial</button>
 			</div>
 		</script>
 		<script id="practice-templ" type="x-tmpl-mustache">
-			<div class="practice-templ">
+			<div class="practice-templ trial-templ">
 				<h2>Practice Trial</h2>
-				<p>Under construction, <br />press <strong>go to experiment</strong></p>
-				<button type="submit" id="continue-btn" class="continue-btn">go to experiment</button>
+				<section>
+					<canvas id="canvas" height="300" width="500"></canvas>
+				</section>
+				<section class="sentence">
+					<p class="hidden instructions">click <strong>SPACE</strong> to start</p>
+					<p id="sentence-cont">
+					{{# sentence }}
+					<span class="spr-word">{{ . }}</span>
+					{{/ sentence }}
+					</p>
+				</section>
+				<section class="question no-display">
+					<p>Did the sentence truthfully describle the picture?</p>
+					<p>
+						<input id="yes" type="radio" name="answer" value="yes"/>
+						<input id="no" type="radio" name="answer" value="no"/>
+						<label for="yes">Yes</label>
+						<label for="no">No</label>	
+					</p>	
+					<button type="submit" id="continue-btn" class="continue-btn no-display">continue</button>
+				</section>
+			</div>
+		</script>
+		<script id="begin-templ" type="x-tmpl-mustache">
+			<div class="begin-templ">
+				<button type="submit" id="continue-btn" class="continue-btn">begin experiment</button>
 			</div>
 		</script>
 		<script id="trial-templ" type="x-tmpl-mustache">
@@ -54,7 +80,7 @@
 				</section>
 				<section class="sentence">
 					<p class="hidden instructions">click <strong>SPACE</strong> to start</p>
-					<p class="big" id="sentence-cont">
+					<p id="sentence-cont">
 					{{# sentence }}
 					<span class="spr-word">{{ . }}</span>
 					{{/ sentence }}
@@ -88,7 +114,7 @@
 					</p>
 					<p>
 						<label for="age">Age:</label>
-						<input type="text" id="age" />
+						<input type="number" min="18" max="110" id="age" />
 					</p>
 					<p>
 						<label for="education">Level of Education:</label>
@@ -100,16 +126,16 @@
 						</select>
 					</p>
 					<p>
-						<label for="languages">Native Languages:</label>
+						<label for="languages">Native Languages: <br /><span>(i.e. the language(s) spoken at home when you were a child)</</span></label>
 						<input type="text" id="languages"/>
-						<p>(i.e. the language(s) spoken at home when you were a child)</p>
 					</p>
-					<p>
-						<textarea id="comments" placeholder="Further Comments"
-						rows="10" cols="50"></textarea>
+					<p class="comment-sect">
+						<label for="comments">Further comments</label>
+						<textarea id="comments"
+						rows="6" cols="40"></textarea>
 					</p>
+					<button type="submit" id="continue-btn" class="continue-btn">continue</button>
 				</form>
-				<button type="submit" id="continue-btn" class="continue-btn">continue</button>
 			</div>
 		</script>
 		<script id="thanks-templ" type="x-tmpl-mustache">
