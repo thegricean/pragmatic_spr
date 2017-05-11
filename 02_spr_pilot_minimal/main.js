@@ -7,11 +7,9 @@ var spr = {};
 spr.getNextView = function() {
 	if (this.view.name === "introduction") {
 		this.view = initInstructionsView();
-		console.log("instruction view");
 	} else if (this.currentPractice < this.practice.length) {
 		this.view = initPracticeView();
 		this.currentPractice++;
-		console.log(this.currentPractice);
 	} else if (this.view.name === "practice") {
 		this.view = initBeginExpView();
 	} else if (this.currentTrial < this.exp.length) {

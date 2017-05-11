@@ -98,6 +98,11 @@ var initTrialView = function(trialInfo) {
 
 	var canvas = initCanvas();
 	var sentence = initSentence();
+	var fillProgressBar = function(elem){
+		var width = $('.progress-bar-container').width();
+		var filled = ((width / spr.exp.length) * spr.currentTrial);
+		return elem.width(filled);
+	};
 	var sentenceList =  sentence.createWordList(
 		spr.exp[spr.currentTrial]["quantifier"], 
 		spr.exp[spr.currentTrial]["colour"]);
@@ -130,6 +135,8 @@ var initTrialView = function(trialInfo) {
 		$('body').off('keyup', handleKeyUp);
 		spr.getNextView();
 	});
+
+	fillProgressBar($('.filled'));
 
 	return view;
 };

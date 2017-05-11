@@ -1,5 +1,4 @@
 var exp  = {
-	trialNumber: 44,
 	circleNumber: 10,
 	quantifierNumber: 4,
 	sentence: {

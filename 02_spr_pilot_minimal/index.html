@@ -30,7 +30,7 @@
 					<p class="big">Thank you for participating in our study. In this study, you will read 44 sentences that describe images and answer questions about them.</p>
 					<p><strong>Legal information:<br /></strong>By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact Judith Degen at <a href="mailto:jdegen@stanford.edu">jdegen@stanford.edu</a> or Noah Goodman at <a href="mailto:ngoodman@stanford.edu">ngoodman@stanford.edu</a>.<br /><br />You must be at least 18 years old to participate.<br /><br />Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences.<br/><br />Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
 				</article>
-				<button type="submit" id="start-exp-btn">start experiment</button>
+				<button type="submit" id="start-exp-btn">go to experiment</button>
 			</div>
 		</script>
 		<script id="instructions-templ" type="x-tmpl-mustache">
@@ -69,12 +69,17 @@
 		</script>
 		<script id="begin-templ" type="x-tmpl-mustache">
 			<div class="begin-templ">
-				<button type="submit" id="continue-btn" class="continue-btn">begin experiment</button>
+				<button type="submit" id="continue-btn" class="continue-btn">start experiment</button>
 			</div>
 		</script>
 		<script id="trial-templ" type="x-tmpl-mustache">
 			<div class="trial-templ">
-				<aside>progrss bar</aside>
+				<aside>
+					<span>progress<span>
+					<div class="progress-bar-container">
+					<div class="filled"></div>
+					</div>
+				</aside>
 				<section>
 					<canvas id="canvas" height="300" width="500"></canvas>
 				</section>
@@ -87,7 +92,7 @@
 					</p>
 				</section>
 				<section class="question no-display">
-					<p>Did the sentence truthfully describle the picture?</p>
+					<p>Did the sentence truthfully describe the picture?</p>
 					<p>
 						<input id="yes" type="radio" name="answer" value="yes"/>
 						<input id="no" type="radio" name="answer" value="no"/>
