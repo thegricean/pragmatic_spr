@@ -1,5 +1,6 @@
 var practice = {};
 
+// creates the practice trial
 practice.init = function() {
 	var practice = [];
 	var quantifiers = ["All", "Some", "Some", "None", "Most"];

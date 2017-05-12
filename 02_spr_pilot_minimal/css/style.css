@@ -56,7 +56,7 @@ p.big {
 /* end instructions slide styles */
 
 .practice-templ.trial-templ {
-	margin: 30px 0;
+	margin: 30px auto;
 }
 
 /* start trial slide styles */
@@ -74,7 +74,7 @@ canvas {
 
 .trial-templ .sentence .spr-word {
 	margin: 15px 0;
-	font-size: 1.4em;
+	font-size: 1.3em;
 }
 
 .trial-templ .instructions {
