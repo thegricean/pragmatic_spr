@@ -26,11 +26,10 @@
 		</main>
 		<script id="intro-templ" type="x-tmpl-mustache">
 			<div class="intro-templ">
-				<img class="logo" src="../_shared/images/cocologo.png" alt="CoCoLab Logo" height="125" width="250" />
-				<h1>Stanford CoCoLab</h1>
+				<img class="logo" src="images/uni-tuebingen-logo.png" alt="Tuebingen Logo" height="256" width="256" />
 				<article>
 					<p class="big">Thank you for participating in our study. In this study, you will read 44 sentences that describe images and answer questions about them.</p>
-					<p><strong>Legal information:<br /></strong>By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact Judith Degen at <a href="mailto:jdegen@stanford.edu">jdegen@stanford.edu</a> or Noah Goodman at <a href="mailto:ngoodman@stanford.edu">ngoodman@stanford.edu</a>.<br /><br />You must be at least 18 years old to participate.<br /><br />Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences.<br/><br />Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
+					<p><strong>Legal information:<br /></strong>By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology.<br /><br />You must be at least 18 years old to participate.<br /><br />Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences.<br/><br />Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
 				</article>
 				<button type="submit" id="start-exp-btn">go to experiment</button>
 			</div>
@@ -64,8 +63,7 @@
 						<input id="no" type="radio" name="answer" value="no"/>
 						<label for="yes">Yes</label>
 						<label for="no">No</label>	
-					</p>	
-					<button type="submit" id="continue-btn" class="continue-btn no-display">continue</button>
+					</p>
 				</section>
 			</div>
 		</script>
@@ -76,12 +74,6 @@
 		</script>
 		<script id="trial-templ" type="x-tmpl-mustache">
 			<div class="trial-templ">
-				<aside>
-					<span>progress<span>
-					<div class="progress-bar-container">
-					<div class="filled"></div>
-					</div>
-				</aside>
 				<section>
 					<canvas id="canvas" height="300" width="500"></canvas>
 				</section>
@@ -103,6 +95,20 @@
 					</p>	
 					<button type="submit" id="continue-btn" class="continue-btn no-display">continue</button>
 				</section>
+			</div>
+		</script>
+		<script id="pause-templ" type="x-tmpl-mustache">
+			<div class="pause-templ">
+				<aside>
+					<span>progress<span>
+					<div class="progress-bar-container">
+					<div class="filled"></div>
+					</div>
+				</aside>
+				<section class="cross-container">
+					<div class="cross"></div>
+				</section>
+				<button type="submit" id="continue-btn" class="continue-btn pause">continue</button>
 			</div>
 		</script>
 		<script id="subj-info-templ" type="x-tmpl-mustache">

@@ -58,7 +58,7 @@ var initPracticeView = function() {
 				$('.instructions').addClass('hidden');
 			}
 		});
-	}, 1000);
+	}, 1500);
 
 	var handleKeyUp = function(e) {
 		if (e.which == 32) {
@@ -66,7 +66,7 @@ var initPracticeView = function() {
 		}
 	};
 
-	$('#continue-btn').on('click', function() {
+	$('input[name=answer]').on('change', function() {
 		$('body').off('keyup', handleKeyUp);
 		spr.getNextView();
 	});
@@ -98,11 +98,6 @@ var initTrialView = function(trialInfo) {
 
 	var canvas = initCanvas();
 	var sentence = initSentence();
-	var fillProgressBar = function(elem){
-		var width = $('.progress-bar-container').width();
-		var filled = ((width / spr.exp.length) * spr.currentTrial);
-		return elem.width(filled);
-	};
 	var sentenceList =  sentence.createWordList(
 		spr.exp[spr.currentTrial]["quantifier"], 
 		spr.exp[spr.currentTrial]["colour"]);
@@ -123,7 +118,7 @@ var initTrialView = function(trialInfo) {
 				$('.instructions').addClass('hidden');
 			}
 		});
-	}, 1000);
+	}, 2000);
 	
 	var handleKeyUp = function(e) {
 		if (e.which == 32) {
@@ -131,12 +126,39 @@ var initTrialView = function(trialInfo) {
 		}
 	};
 
-	$('#continue-btn').on('click', function() {
+	$('input[name=answer]').on('change', function() {
 		$('body').off('keyup', handleKeyUp);
 		spr.getNextView();
 	});
 
-	fillProgressBar($('.filled'));
+	return view;
+};
+
+var initPauseView = function(trialInfo) {
+	var view = {};
+	view.name = "pause";
+	view.template = $('#pause-templ').html();
+
+	var fillProgressBar = function(elem){
+		var width = $('.progress-bar-container').width();
+		var filled = ((width / spr.exp.length) * spr.currentTrial);
+		return elem.width(filled);
+	};
+
+	view.rendered = Mustache.render(view.template, { type: "pause" });
+
+	$('#main').html(view.rendered);
+
+	if (spr.currentTrial !== 0) {
+		fillProgressBar($('.filled'));
+	} else {
+		$('aside').addClass('no-display');
+	}
+
+	$('#continue-btn').on('click', function() {
+		spr.getNextView();
+	});
+
 
 	return view;
 };

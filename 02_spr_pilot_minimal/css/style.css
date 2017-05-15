@@ -41,12 +41,17 @@ p.big {
 .instructions-templ,
 .practice-templ,
 .trial-templ,
+.pause-templ,
 .subj-info-templ {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
 	max-width: 760px;
 	margin: 30px auto;
+}
+
+.intro-templ .big {
+	margin: 60px 0 40px 0;
 }
 
 /* start instructions slide styles */
@@ -187,6 +192,47 @@ aside span {
 }
 /* end progress bar */
 
+/* start pause template */
+.cross-container {
+	height: 300px;
+	margin: 30px auto;
+	width: 500px;
+
+	position: relative;
+}
+
+/* the cross is made of code */
+
+.cross {
+	display: block;
+}
+
+.cross:before,
+.cross:after {
+	background: #111;
+	display: block;
+	content: "";
+	height: 30px;
+	width: 4px;
+
+	position: absolute;
+	top: calc(50% + 15px);
+	left: 50%;
+}
+
+.cross:before {
+	transform: rotate(45deg);
+}
+
+.cross:after {
+	transform: rotate(-45deg);
+}
+
+.continue-btn.pause {
+	margin-top: 140px;
+}
+
+/* end pause template */
 
 /* words */
 .spr-word {
