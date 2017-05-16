@@ -28,8 +28,8 @@ spr.getNextView = function() {
 
 spr.init = function() {
 	this.view = initIntroView();
-	this.exp = exp.init();
+	this.exp = initExp();
 	this.practice = practice.init();
 	this.currentTrial = 0;
-	this.currentPractice = 0;
+	this.currentPractice = 5;
 };
