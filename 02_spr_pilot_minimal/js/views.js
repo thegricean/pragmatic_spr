@@ -58,7 +58,7 @@ var initPracticeView = function() {
 				$('.instructions').addClass('hidden');
 			}
 		});
-	}, 1500);
+	}, 2000);
 
 	var handleKeyUp = function(e) {
 		if (e.which == 32) {
@@ -141,7 +141,6 @@ var initTrialView = function(trialInfo) {
 
 	var getDeltas = function() {
 		var deltas = [];
-		console.log(rt);
 
 		for (var i = 0; i < rt.length - 1; i++) {
 			view.deltas[i] = rt[i+1] - rt[i];
