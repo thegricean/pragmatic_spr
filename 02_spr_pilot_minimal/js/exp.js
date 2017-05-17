@@ -68,6 +68,12 @@ var initExp = function() {
 	};
 
 	exp.data = shufflePQCComb();
+	exp.data.subjInfo = {};
+
+	exp.addSubjInfo = function(info) {
+		console.log("add additional Info");
+		exp.data.subjInfo = info;
+	};
 
 	exp.addResponse = function(trialIndex, response, rt) {
 		exp.data[trialIndex].response = response;

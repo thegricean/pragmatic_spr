@@ -188,14 +188,22 @@ var initPauseView = function(trialInfo) {
 	return view;
 };
 
-var initSubjInfoView = function() {
+var initSubjInfoView = function(sendData) {
 	var view = {};
 	view.name = "subjInfo";
 	view.template = $('#subj-info-templ').html();
 	view.rendered = Mustache.render(view.template, { type: "personalData" });
 	$('#main').html(view.rendered);
 
+
 	$('#continue-btn').on('click', function() {
+		sendData({
+			age: $('#age').val(),
+			gender: $('#gender').val(),
+			education: $('#education').val(),
+			languages: $('#languages').val(),
+			comments: $('#languages').val()
+		});
 		spr.getNextView();
 	});
 

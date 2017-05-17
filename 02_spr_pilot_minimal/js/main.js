@@ -15,7 +15,7 @@ spr.getNextView = function() {
 		this.view = initPracticeView();
 		this.currentPractice++;
 	} else if ((this.view.name === "trial") && (this.currentTrial === this.exp.data.length)) {
-		this.view = initSubjInfoView();
+		this.view = initSubjInfoView(this.exp.addSubjInfo);
 	} else if (this.view.name === "trial") {
 		this.view = initPauseView(this.exp.data[this.currentTrial]);
 	} else if (this.currentTrial < this.exp.data.length) {
@@ -28,8 +28,8 @@ spr.getNextView = function() {
 };
 
 spr.init = function() {
-	this.view = initIntroView();
 	this.exp = initExp();
+	this.view = initIntroView();
 	this.practice = practice.init();
 	this.currentTrial = 0;
 	this.currentPractice = 0;
