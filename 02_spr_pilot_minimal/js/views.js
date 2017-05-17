@@ -95,12 +95,17 @@ var initTrialView = function(trialInfo) {
 	var view = {};
 	view.name = "trial";
 	view.template = $('#trial-templ').html();
+	view.deltas = [];
+	view.response = [];
+
+	var rt = [];
 
 	var canvas = initCanvas();
 	var sentence = initSentence();
 	var sentenceList =  sentence.createWordList(
-		spr.exp[spr.currentTrial]["quantifier"], 
-		spr.exp[spr.currentTrial]["colour"]);
+		trialInfo["quantifier"], 
+		trialInfo["colour"]);
+	var rtCount = sentenceList.length;
 
 	var rendered = Mustache.render(view.template, {
 		type: "trial",
@@ -108,7 +113,7 @@ var initTrialView = function(trialInfo) {
 
 	$('#main').html(rendered);
 
-	canvas.draw(spr.exp[spr.currentTrial]["black"]);
+	canvas.draw(trialInfo["black"]);
 	setTimeout(function() {
 		canvas.hide();
 		$('.instructions').removeClass('hidden');
@@ -123,10 +128,31 @@ var initTrialView = function(trialInfo) {
 	var handleKeyUp = function(e) {
 		if (e.which == 32) {
 			sentence.showNextWord();
+			collectReadingTimes();
 		}
 	};
 
+	var collectReadingTimes = function() {
+		if (rtCount >= 0) {
+			rt.push(Date.now());
+		}
+		rtCount--;
+	};
+
+	var getDeltas = function() {
+		var deltas = [];
+		console.log(rt);
+
+		for (var i = 0; i < rt.length - 1; i++) {
+			view.deltas[i] = rt[i+1] - rt[i];
+		};
+
+		return deltas;
+	};
+
 	$('input[name=answer]').on('change', function() {
+		view.response.push($('input[name=answer]:checked').val());
+		view.deltas = getDeltas();
 		$('body').off('keyup', handleKeyUp);
 		spr.getNextView();
 	});
@@ -141,7 +167,7 @@ var initPauseView = function(trialInfo) {
 
 	var fillProgressBar = function(elem){
 		var width = $('.progress-bar-container').width();
-		var filled = ((width / spr.exp.length) * spr.currentTrial);
+		var filled = ((width / spr.exp.data.length) * spr.currentTrial);
 		return elem.width(filled);
 	};
 

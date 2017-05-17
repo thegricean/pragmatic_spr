@@ -14,12 +14,13 @@ spr.getNextView = function() {
 	} else if (this.currentPractice < this.practice.length) {
 		this.view = initPracticeView();
 		this.currentPractice++;
-	} else if ((this.view.name === "trial") && (this.currentTrial === this.exp.length)) {
+	} else if ((this.view.name === "trial") && (this.currentTrial === this.exp.data.length)) {
 		this.view = initSubjInfoView();
 	} else if (this.view.name === "trial") {
-		this.view = initPauseView(this.exp[this.currentTrial]);
-	} else if (this.currentTrial < this.exp.length) {
-		this.view = initTrialView(this.exp[this.currentTrial]);
+		this.view = initPauseView(this.exp.data[this.currentTrial]);
+	} else if (this.currentTrial < this.exp.data.length) {
+		this.view = initTrialView(this.exp.data[this.currentTrial]);
+		this.exp.addResponse(this.currentTrial, this.view.response, this.view.deltas);
 		this.currentTrial++; 
 	} else {
 		this.view = initThanksView();

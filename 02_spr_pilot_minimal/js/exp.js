@@ -69,5 +69,10 @@ var initExp = function() {
 
 	exp.data = shufflePQCComb();
 
-	return exp.data;
+	exp.addResponse = function(trialIndex, response, rt) {
+		exp.data[trialIndex].response = response;
+		exp.data[trialIndex].readingTimes = rt;
+	};
+
+	return exp;
 };
