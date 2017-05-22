@@ -42,7 +42,8 @@ p.big {
 .practice-templ,
 .trial-templ,
 .pause-templ,
-.subj-info-templ {
+.subj-info-templ,
+.thanks-templ {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
