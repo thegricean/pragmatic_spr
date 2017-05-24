@@ -33,5 +33,5 @@ spr.init = function() {
 	this.view = initIntroView();
 	this.practice = practice.init();
 	this.currentTrial = 0;
-	this.currentPractice = 4;
+	this.currentPractice = 0;
 };
