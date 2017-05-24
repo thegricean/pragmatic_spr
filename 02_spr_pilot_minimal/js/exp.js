@@ -5,12 +5,12 @@ var initExp = function() {
 	exp.quantifiers = ["Some", "All", "None", "Most"];
 
 	// func that returns the number of the pictures
-	getPictureNumber = function() {
+	var getPictureNumber = function() {
 	return exp.circleNumber;
 	};
 
 	// func that returns a list of objects representing every picture type
-	generatePictureTypes = function() {
+	var generatePictureTypes = function() {
 		number = getPictureNumber();
 		var types = [];
 		for (var i=0; i<=number; i++) {
@@ -23,11 +23,12 @@ var initExp = function() {
 	// returns a list of objects
 	// every object contains num of black circles, num of all circles
 	// target colour and quantifier
-	generatePQCComb = function() {
+	var generatePQComb = function() {
 		var pictureTypes = generatePictureTypes();
 		var combinations = [];
 		var quantifiers = exp.quantifiers;
-		// picture - quantifier
+
+		// picture - quantifier combination
 		for (var i = 0; i < pictureTypes.length; i++) {
 			for (var j = 0; j < quantifiers.length; j++) {
 				combinations.push({
@@ -38,36 +39,41 @@ var initExp = function() {
 			};
 		};
 
-		// add the colours
-		for (var i = 0; i < combinations.length; i++) {
-			if ((i % 2) === 0) {
-				combinations[i].colour = "black";
-			} else {
-				combinations[i].colour = "white";			
-			}
-		};
-		return combinations;
+		return shuffleComb(combinations);
 	};
 
 	// func shuffles the list of PQC objects
 	// returns a shuffled list of PQC objects
-	shufflePQCComb = function() {
-		var arr = generatePQCComb();
-		var counter = arr.length;
+	var shuffleComb = function(comb) {
+		var counter = comb.length;
 
 		while (counter > 0) {
 			let index = Math.floor(Math.random() * counter);
 			counter--;
 
-			let temp = arr[counter];
-			arr[counter] = arr[index];
-			arr[index] = temp;
+			let temp = comb[counter];
+			comb[counter] = comb[index];
+			comb[index] = temp;
 		};
 
-		return arr;
+		return comb;
 	};
 
-	exp.data = shufflePQCComb();
+	var addTargetColours = function() {
+		combinations = generatePQComb();
+
+		for (var i = 0; i < combinations.length; i++) {
+			if (i < (combinations.length/2)) {
+				combinations[i].colour = "black";
+			} else {
+				combinations[i].colour = "white";			
+			}
+		};
+
+		return shuffleComb(combinations);
+	};
+
+	exp.data = addTargetColours();
 	exp.data.subjInfo = {};
 
 	exp.addSubjInfo = function(info) {
