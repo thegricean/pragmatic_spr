@@ -3,6 +3,7 @@ var initSentence = function() {
 	var currentWord = -1;
 
 	// picks the word that should be shown when space is clicked
+	// when there are no more words to show, the question appears
 	sentence.showNextWord = function() {
 		var words = $('.spr-word').toArray();
 

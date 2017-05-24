@@ -98,6 +98,7 @@ var initTrialView = function(trialInfo) {
 	view.deltas = [];
 	view.response = [];
 
+	// reading times
 	var rt = [];
 
 	var canvas = initCanvas();
@@ -114,6 +115,8 @@ var initTrialView = function(trialInfo) {
 	$('#main').html(rendered);
 
 	canvas.draw(trialInfo["black"]);
+
+	// after 2000 ms the canvas is hidden and the subject can start reading
 	setTimeout(function() {
 		canvas.hide();
 		$('.instructions').removeClass('hidden');
@@ -125,6 +128,7 @@ var initTrialView = function(trialInfo) {
 		});
 	}, 2000);
 	
+	// when space bar is pressed, next word shows and the rt is saved
 	var handleKeyUp = function(e) {
 		if (e.which == 32) {
 			sentence.showNextWord();
@@ -132,6 +136,7 @@ var initTrialView = function(trialInfo) {
 		}
 	};
 
+	// func that collects rt in ms since 1 Jan 1970 
 	var collectReadingTimes = function() {
 		if (rtCount >= 0) {
 			rt.push(Date.now());
@@ -139,6 +144,7 @@ var initTrialView = function(trialInfo) {
 		rtCount--;
 	};
 
+	// func that returns a list of rt in ms of each word
 	var getDeltas = function() {
 		var deltas = [];
 
@@ -149,8 +155,11 @@ var initTrialView = function(trialInfo) {
 		return deltas;
 	};
 
+	// when the subject answers, the rt deltas and response are
+	// pushed back to the exp model and next view is shown
 	$('input[name=answer]').on('change', function() {
 		view.response.push($('input[name=answer]:checked').val());
+		view.response.push(Date.now() - rt[rt.length - 1]);
 		view.deltas = getDeltas();
 		$('body').off('keyup', handleKeyUp);
 		spr.getNextView();

@@ -4,6 +4,7 @@ $(document).ready(function(){
 
 var spr = {};
 
+// view handler
 spr.getNextView = function() {
 	if (this.view.name === "introduction") {
 		this.view = initInstructionsView();
@@ -32,5 +33,5 @@ spr.init = function() {
 	this.view = initIntroView();
 	this.practice = practice.init();
 	this.currentTrial = 0;
-	this.currentPractice = 0;
+	this.currentPractice = 4;
 };

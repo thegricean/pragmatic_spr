@@ -6,7 +6,7 @@ var initExp = function() {
 
 	// func that returns the number of the pictures
 	var getPictureNumber = function() {
-	return exp.circleNumber;
+		return exp.circleNumber;
 	};
 
 	// func that returns a list of objects representing every picture type
@@ -19,10 +19,11 @@ var initExp = function() {
 		return types;
 	};
 
-	// fun that creates picture - quantifier - colour combinations
+	// fun that creates picture - quantifier combinations
 	// returns a list of objects
 	// every object contains num of black circles, num of all circles
-	// target colour and quantifier
+	// and quantifier
+	// the list of objects is shuffled
 	var generatePQComb = function() {
 		var pictureTypes = generatePictureTypes();
 		var combinations = [];
@@ -42,8 +43,7 @@ var initExp = function() {
 		return shuffleComb(combinations);
 	};
 
-	// func shuffles the list of PQC objects
-	// returns a shuffled list of PQC objects
+	// func that takes a list and returns the same list shuffled
 	var shuffleComb = function(comb) {
 		var counter = comb.length;
 
@@ -59,6 +59,7 @@ var initExp = function() {
 		return comb;
 	};
 
+	// func that adds targert colours to the trial object
 	var addTargetColours = function() {
 		combinations = generatePQComb();
 
@@ -77,7 +78,6 @@ var initExp = function() {
 	exp.data.subjInfo = {};
 
 	exp.addSubjInfo = function(info) {
-		console.log("add additional Info");
 		exp.data.subjInfo = info;
 	};
 
