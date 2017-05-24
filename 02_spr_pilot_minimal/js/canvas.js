@@ -8,7 +8,7 @@ var initCanvas = function() {
 	// and returns an array with 10 strings "black" and "white"
 	// colours does not need shuffling because
 	// the positions the are drawn is picked at randmon
-	generateColours = function(numBlack) {
+	var generateColours = function(numBlack) {
 		var colours = [];
 		for (var i=0; i<numBlack; i++) {
 			colours.push("black");
@@ -22,7 +22,7 @@ var initCanvas = function() {
 
 	// func that takes the width and height of the canvas
 	// and returns an object with randomly generated x and y positions for a circle
-	generateCoords = function() {
+	var generateCoords = function() {
 		var min = 40;
 		var maxWidth = $('#canvas').width() - 40;
 		var maxHeight = $('#canvas').height() - 40;
@@ -32,7 +32,7 @@ var initCanvas = function() {
 	}
 
 	// checkes if the circle is too close to another circle
-	checkCoords = function(xPos, yPos) {
+	var checkCoords = function(xPos, yPos) {
 		for (var i=0; i<coordsCollection.length; i++) {
 			if (((xPos + 50) > coordsCollection[i]["xPos"])
 				&& ((xPos - 50) < coordsCollection[i]["xPos"])
@@ -45,7 +45,7 @@ var initCanvas = function() {
 	};
 
 	// func finds a circle position
-	positionCircle = function() {
+	var positionCircle = function() {
 		var coords = generateCoords();
 		if (checkCoords(coords["xPos"], coords["yPos"])) {
 			coordsCollection.push(coords);
@@ -58,7 +58,7 @@ var initCanvas = function() {
 	// generates positons
 	// width - the width of the canvas
 	// height - the hight of the canvas
-	getPositions = function() {
+	var getPositions = function() {
 		while (coordsCollection.length <= 10) {
 			positionCircle();
 		};

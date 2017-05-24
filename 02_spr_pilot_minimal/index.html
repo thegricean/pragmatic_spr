@@ -115,14 +115,14 @@
 			<div class="subj-info-templ">
 				<h2>Additional Information</h2>
 				<p>Answering the following questions is optional, but will help us understand your answers.</p>
-				<form method="post">
+				<form method="post" action="https://workersandbox.mturk.com/mturk/externalSubmit">
 					<p>
 						<label for="age">Age:</label>
-						<input type="number" min="18" max="110" id="age" />
+						<input type="number" name="age" min="18" max="110" id="age" />
 					</p>
 					<p>
 						<label for="gender">Gender:</label>
-						<select id="gender">
+						<select id="gender" name="gender">
 							<option></option>
 							<option value="male">male</option>
 							<option value="female">female</option>
@@ -131,7 +131,7 @@
 					</p>
 					<p>
 						<label for="education">Level of Education:</label>
-						<select id="education">
+						<select id="education" name="education">
 							<option></option>
 							<option value="ghs">Graduated High School</option>
 							<option value="gc">Graduated College</option>
@@ -139,14 +139,16 @@
 						</select>
 					</p>
 					<p>
-						<label for="languages">Native Languages: <br /><span>(i.e. the language(s) spoken at home when you were a child)</</span></label>
+						<label for="languages" name="languages">Native Languages: <br /><span>(i.e. the language(s) spoken at home when you were a child)</</span></label>
 						<input type="text" id="languages"/>
 					</p>
 					<p class="comment-sect">
 						<label for="comments">Further comments</label>
-						<textarea id="comments"
+						<textarea name="comments" id="comments"
 						rows="6" cols="40"></textarea>
 					</p>
+					<input type="hidden" name="assignmentId" value="{{ assignmentId }}" />
+					<input type="hidden" name="results" value="{{ results }}"/>
 					<button type="submit" id="continue-btn" class="continue-btn">continue</button>
 				</form>
 			</div>

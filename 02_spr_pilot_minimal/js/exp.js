@@ -15,7 +15,8 @@ var initExp = function() {
 		var types = [];
 		for (var i=0; i<=number; i++) {
 			types.push({black: i, all: number});
-		};
+		}
+		
 		return types;
 	};
 
@@ -37,8 +38,8 @@ var initExp = function() {
 					black: pictureTypes[i].black,
 					quantifier: quantifiers[j]
 				});
-			};
-		};
+			}
+		}
 
 		return shuffleComb(combinations);
 	};
@@ -54,7 +55,7 @@ var initExp = function() {
 			let temp = comb[counter];
 			comb[counter] = comb[index];
 			comb[index] = temp;
-		};
+		}
 
 		return comb;
 	};
@@ -69,7 +70,7 @@ var initExp = function() {
 			} else {
 				combinations[i].colour = "white";			
 			}
-		};
+		}
 
 		return shuffleComb(combinations);
 	};
@@ -84,6 +85,10 @@ var initExp = function() {
 	exp.addResponse = function(trialIndex, response, rt) {
 		exp.data[trialIndex].response = response;
 		exp.data[trialIndex].readingTimes = rt;
+	};
+
+	exp.getJSON = function() {
+		return JSON.stringify({"results": exp.data});
 	};
 
 	return exp;

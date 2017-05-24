@@ -199,13 +199,29 @@ var initPauseView = function(trialInfo) {
 
 var initSubjInfoView = function(sendData) {
 	var view = {};
+
+	var getAssignmentId = function() {
+		var url = window.location.search.substring(1); //get rid of "?" in querystring
+		var qArray = url.split('&'); //get key-value pairs
+		for (var i = 0; i < qArray.length; i++) {
+			var pArr = qArray[i].split('='); //split key and value
+			if (pArr[0] === "assignmentId") {
+				return pArr[1]; //return value
+			}
+		}
+	};
+	
 	view.name = "subjInfo";
 	view.template = $('#subj-info-templ').html();
-	view.rendered = Mustache.render(view.template, { type: "personalData" });
+	view.rendered = Mustache.render(view.template, {
+		type: "personalData",
+		assignmentId: getAssignmentId(),
+		results: spr.exp.getJSON()
+	});
 	$('#main').html(view.rendered);
 
 
-	$('#continue-btn').on('click', function() {
+/*	$('#continue-btn').on('click', function() {
 		sendData({
 			age: $('#age').val(),
 			gender: $('#gender').val(),
@@ -214,7 +230,7 @@ var initSubjInfoView = function(sendData) {
 			comments: $('#languages').val()
 		});
 		spr.getNextView();
-	});
+	});*/
 
 	return view;
 };
