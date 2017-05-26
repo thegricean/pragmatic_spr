@@ -88,7 +88,10 @@ var initExp = function() {
 	};
 
 	exp.getJSON = function() {
-		return JSON.stringify({"results": exp.data});
+		return JSON.stringify({
+			"results": exp.data,
+			"subject info": exp.data.subjInfo
+		});
 	};
 
 	return exp;

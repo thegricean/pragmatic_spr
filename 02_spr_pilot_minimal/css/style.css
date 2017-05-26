@@ -161,7 +161,8 @@ canvas {
 
 /* end subj info slide styles */
 
-.begin-templ {
+.begin-templ,
+.thanks-templ {
 	display: flex;
 	align-items: center;
 	justify-content: center;
