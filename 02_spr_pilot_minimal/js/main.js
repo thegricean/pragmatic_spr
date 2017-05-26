@@ -1,5 +1,12 @@
 $(document).ready(function(){
 	spr.init();
+
+	// prevent scrolling when space is pressed (firefox does it)
+	window.onkeydown = function(e) {
+		if (e.keyCode == 32 && e.target == document.body) {
+			e.preventDefault();
+		}
+	};
 });
 
 var spr = {};
@@ -33,5 +40,5 @@ spr.init = function() {
 	this.view = initIntroView();
 	this.practice = practice.init();
 	this.currentTrial = 40;
-	this.currentPractice = 4;
+	this.currentPractice = 3;
 };
