@@ -76,10 +76,10 @@ var initExp = function() {
 	};
 
 	exp.data = addTargetColours();
-	exp.data.subjInfo = {};
+	exp.subjInfo = {};
 
 	exp.addSubjInfo = function(info) {
-		exp.data.subjInfo = info;
+		exp.subjInfo = info;
 	};
 
 	exp.addResponse = function(trialIndex, response, rt) {
@@ -90,7 +90,7 @@ var initExp = function() {
 	exp.getJSON = function() {
 		return JSON.stringify({
 			"results": exp.data,
-			"subject info": exp.data.subjInfo
+			"subjectInfo": exp.subjInfo
 		});
 	};
 
