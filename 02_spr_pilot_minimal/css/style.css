@@ -33,7 +33,7 @@ button {
 }
 
 p.big {
-	font-size: 1.3em;
+	font-size: 1.2em;
 	font-weight: bold;
 }
 
@@ -52,7 +52,7 @@ p.big {
 }
 
 .intro-templ .big {
-	margin: 60px 0 40px 0;
+	margin: 40px 0;
 }
 
 /* start instructions slide styles */
