@@ -212,7 +212,7 @@ var initSubjInfoView = function(sendData) {
 			gender: $('#gender').val(),
 			education: $('#education').val(),
 			languages: $('#languages').val(),
-			comments: $('#languages').val()
+			comments: $('#comments').val()
 		});
 		spr.getNextView();
 	});
