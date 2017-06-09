@@ -49,14 +49,21 @@ def prepare_data(raw_data):
 
 		for i in range(0, len(li)):
 			new_s = ""
+			quotes_counter = 0
+			skip = False
 
-			for j in range(1, len(li[i])-1):
-				if li[i][j] == "\"" and li[i][j+1] == "\"":
+			for j in range(0, len(li[i])):
+				if skip:
+					skip = False
 					continue
-				else:
-					new_s = new_s + li[i][j]
 
-			valid_jsons.append(new_s)
+				if j < len(li[i]) -1 and li[i][j] == "\"" and li[i][j+1] == "\"":
+					new_s += "\""
+					skip = True
+				else:
+					new_s += li[i][j]
+
+			valid_jsons.append(new_s[1:-1])
 
 		return valid_jsons
 
@@ -91,7 +98,7 @@ def create_csv(li, assignment_ids):
 
 			# for each trial
 			for trial in li[assignment]['results']:
-				assignment_id = assignment_ids[assignment]
+				assignment_id = assignment_ids[assignment][1:-1]
 				age = li[assignment]['subjectInfo']['age']
 				gender = li[assignment]['subjectInfo']['gender']
 				languages = li[assignment]['subjectInfo']['languages']
