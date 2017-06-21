@@ -88,8 +88,8 @@ def create_csv(li, assignment_ids):
 		"""
 		Headers
 		"""
-		w.writerow(['assignment_id', 'white_balls', 'black_balls', 'quantifier', 'colour',
-			'"all"', '"of"', '"the"', '"balls"', '"are"', 'target_colour', '"in"', '"the"', '"picture"',
+		w.writerow(['assignment_id', 'subject', 'white_balls', 'black_balls', 'quantifier', 'colour',
+			'QUANT', 'of', 'the1', 'balls', 'are', 'TGW', 'IN', 'the2', 'picture',
 			'answer', 'answer_time',
 			'age', 'gender', 'languages', 'education', 'comments'])
 
@@ -107,6 +107,7 @@ def create_csv(li, assignment_ids):
 
 				w.writerow([
 					assignment_id,
+					assignment + 1,
 					trial['all'] - trial['black'],
 					trial['black'],
 					trial['quantifier'],

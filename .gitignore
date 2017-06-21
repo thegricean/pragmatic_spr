@@ -24,3 +24,11 @@
 *mturk.csv
 *mturk/
 /meta/*
+/02pspr2/*.config
+/02pspr2/*.input
+/02pspr2/*.properties
+/02pspr2/*.question
+/02pspr2/*.results
+/02pspr2/*.success
+/02pspr2/results.csv
+
