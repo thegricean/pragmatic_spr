@@ -2,7 +2,7 @@ library(tidyverse)
 
 
 # path to file
-data <- read.csv("02pspr2/results.csv", header = TRUE, sep = ",")
+data <- read_csv("results.csv")
 
 # convert data to tibble
 # CHECK LATER: is this needed?
@@ -17,7 +17,7 @@ data$black_balls <- as.factor(data$black_balls)
 # y-axis: the avg word reading time
 # x-axis: the target word (word for colour) reading time
 # colour: each colour represents a subject
-plot_avgwrt_avgtgwrt <- function() {
+plot_avg_w_rt_avg_tgw_rt <- function() {
 	# add column with the reading time of the whole
 	data <- mutate(data, sentence_rt = QUANT + of + the1 + balls +
 	are + IN + the2 + picture)
@@ -37,16 +37,17 @@ plot_avgwrt_avgtgwrt <- function() {
 	geom_point(alpha = 0.5) +
 	labs(
 		title = "Avg reading time of a word compared to the reading time of the target word",
+		subtitle = "in calculating the avg rt of a word, the rt of the target word is excluded",
 		x = "reading time of the target word",
-		y = "the avg rt of word"
+		y = "the avg reading time of a word"
 	) + 
 	coord_cartesian(ylim = c(0, 1250), xlim = c(0, 1250)) +
 	coord_equal()
 }
 
 ggsave(
-	"avg_w_rt_avg_tgw_rt.pdf",
-	plot_avgwrt_avgtgwrt()
+	"plot1.pdf",
+	plot_avg_w_rt_avg_tgw_rt()
 )
 
 
@@ -54,11 +55,22 @@ ggsave(
 # x-axis: the reading times of "are:, target_colour, "in", "the", "picture"
 # y-axis: the reading times of the words
 plot_by_condition <- function() {
-	# the second part of the sentence("are targer_colour in the picture")
+	# the second part of the sentence("are TGW in the picture")
 	# is gathered in collumn sentence_second_part
 	data  <- data%>%gather(are, TGW, IN, the2, picture,
 		key="sentence_second_part", value = "second_part_rt")
+	# specifies the order of the words (like in the original sentence)
 	data$sentence_second_part = factor(data$sentence_second_part, levels = c("are", "TGW", "IN", "the2", "picture"))
+	# create a column isTG (is target word)
+	data <- mutate(data, isTG = NA)
+	# fill isTG with true if the row is related to TGW and false if not
+	for (i in 1:length(data$sentence_second_part)) {
+		if (data$sentence_second_part[i] == "TGW") {
+			data$isTG[i] <- TRUE
+		} else {
+			data$isTG[i] <- FALSE
+		}
+	}
 
 	ggplot(
 		data = data,
@@ -66,24 +78,47 @@ plot_by_condition <- function() {
 			x = sentence_second_part,
 			y = second_part_rt,
 			colour = subject,
+			shape = isTG,
+			size = isTG,
 			group = subject)) +
-	geom_line(size = 0.3) +
-	geom_point(size = 0.5) +
-	# coord_cartesian(ylim = c(120, 500)) +
+	geom_line(size = 0.3, alpha = 0.7) +
+	geom_point() +
+	scale_shape_manual(values = c(1, 8)) + 
+	scale_size_manual(values = c(0.5, 1)) +
 	facet_grid(quantifier ~ black_balls, scales = "free_y", space = "free") +
 	labs(
 		y = "reading time in ms",
-		x = ""
+		x = "",
+		shape = "is target word",
+		size = "is target word"
 	) + 
 	theme(legend.position = "bottom", axis.text.x=element_text(angle=45,hjust=1,vjust=0.5))
 }
 
 ggsave(
-	"plot_by_condition.pdf",
+	"plot2.pdf",
 	plot_by_condition(),
 	width = 12,
 	height = 5
 )
+
+# plot_avg_by_condition <- function() {
+# 	# the second part of the sentence("are TGW in the picture")
+# 	# is gathered in collumn sentence_second_part
+# 	data  <- data%>%gather(are, TGW, IN, the2, picture,
+# 		key="sentence_second_part", value = "second_part_rt")
+
+# 	for (i in 1:length.data) {
+# 		if (quantifier == "Most" & black_balls == 0)
+# 	}
+# }
+
+# ggsave(
+# 	"plot3.pdf",
+# 	plot_avg_by_condition(),
+# 	width = 12,
+# 	height = 5
+# )
 
 # func that creates a scatterplot where the avg reading time per word before the
 # target word appears(x axis) is compared to the avg reading time per word after the target word appears (y-axis)
@@ -112,7 +147,7 @@ plot_before_after_tgw <- function() {
 }
 
 ggsave(
-	"plot_before_after_tgw.pdf",
+	"plot3.pdf",
 	plot_before_after_tgw()
 )
 
@@ -127,31 +162,21 @@ plot_answer <- function() {
 			fill = colour
 			)) + 
 	geom_bar() +
+	scale_fill_manual(values = c("black", "white")) +
 	facet_grid(quantifier ~ black_balls) +
 	labs(
 		title = "Answer given by number of black balls and quantifier",
-		subtitle = "conditions: quantifier ~ number of black balls",
-		fill = "colour used in the sentence"
-	)
+		fill = "colour used",
+		x = "answer given"
+	) +
+	theme_dark() +
+	theme(axis.text.x=element_text(angle=45,hjust=1,vjust=0.5))
 }
 
 ggsave(
-	"plot_answer.pdf",
+	"plot4.pdf",
 	plot_answer()
 )
-
-plot_5 <- function() {
-	data <- filter(data, answer == "yes")
-
-	ggplot(
-		data = data,
-		mapping = aes(
-			x = black_balls,
-			fill = quantifier
-		)) + 
-	geom_bar() +
-	facet_wrap(~ colour)
-}
 
 # func that takes data with only "yes" answers
 # and plots how many times yes is given per number of black balls displayed
@@ -168,15 +193,14 @@ plot_yes <- function() {
 	facet_grid(colour ~ quantifier) + 
 	labs(
 		title = "Number of \"yes\" answers given for number of black balls displayed",
-		x = "Number of black balls",
+		x = "Number of black balls displayed",
 		y = "the number of \"yes\" answer given"
 	)
 }
 
 ggsave(
-	"plot_yes.pdf",
+	"plot5.pdf",
 	plot_yes(),
 	width = 10,
 	height = 5
 )
-

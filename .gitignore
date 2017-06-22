@@ -25,4 +25,5 @@
 *mturk/
 /meta/*
 results.csv
+*.pdf
 
