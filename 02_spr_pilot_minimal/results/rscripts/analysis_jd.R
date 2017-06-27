@@ -5,6 +5,11 @@ source("rscripts/helpers.R")
 
 d = read.csv("data/results.csv")
 summary(d)
+d$CongruentBalls = d$black_balls
+d$CongruentBalls = ifelse(d$colour == "black", d$black_balls, d$white_balls)
+d[d$colour == "white",]$CongruentBalls = d[d$colour == "white",]$white_balls
+
+table(d$quantifier,d$CongruentBalls,d$subject)
 
 unique(d$comments)
 
@@ -17,8 +22,6 @@ nrow(d)
 nrow(dd)
 
 # compute number of balls in the scene that are mentioned in the utterance
-dd$CongruentBalls = dd$black_balls
-dd[dd$colour == "white",]$CongruentBalls = dd[dd$colour == "white",]$white_balls
 # reorder region factor labels by where in the sentence they occur
 dd$Region = factor(x=dd$Region,levels=c("QUANT","of","the1","balls","are","TGW","IN","the2","picture"))
 # compute what the literally correct answer is
@@ -30,6 +33,19 @@ dd$CorrectAnswer = ifelse(dd$quantifier == "All" & dd$colour == "black" & dd$bla
                           ifelse(dd$quantifier == "Most" & dd$colour == "black" & dd$black_balls > 5, "yes",                                                        ifelse(dd$quantifier == "Some" & dd$colour == "white" & dd$white_balls > 0, "yes",
                           ifelse(dd$quantifier == "Some" & dd$colour == "black" & dd$black_balls > 0, "yes",
                                  "no"))))))))
+
+
+# judgments
+nrow(dd)
+resptype = dd %>% 
+  filter(CongruentBalls == 10 & quantifier == "Some") 
+rtype = as.data.frame(table(resptype$subject,resptype$answer))
+rtype = rtype[rtype$Var2 == "no" & rtype$Freq > 0,]
+preponders = rtype$Var1
+
+dd$ResponderType = as.factor(ifelse(dd$subject %in% preponders, "pragmatic","semantic"))
+  #as.factor(ifelse(dd$CongruentBalls == 10 & dd$quantifier == "Some" & dd$answer == "no","pragmatic","semantic"))
+
 
 ## PLOTS
 
@@ -98,4 +114,18 @@ ggplot(agr, aes(x=CongruentBalls,y=Mean,color=quantifier,group=quantifier)) +
   geom_line(size=2) +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
   facet_wrap(~Region) +
+  scale_x_continuous(breaks=seq(0,10,by=1))
+
+# plot only quantifier and color region and respondertype
+agr = dd %>%
+  filter(Region %in% c("QUANT","TGW")) %>%
+  group_by(Region,CorrectAnswer,quantifier,CongruentBalls,ResponderType) %>%
+  summarise(Mean=mean(RT),CILow=ci.low(RT),CIHigh=ci.high(RT)) %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(agr, aes(x=CongruentBalls,y=Mean,color=quantifier,group=quantifier)) +
+  geom_point() +
+  geom_line(size=2) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
+  facet_grid(Region~ResponderType) +
   scale_x_continuous(breaks=seq(0,10,by=1))

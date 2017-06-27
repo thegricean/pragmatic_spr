@@ -114,7 +114,7 @@ var initTrialView = function(trialInfo) {
 
 	$('#main').html(rendered);
 
-	canvas.draw(trialInfo["black"]);
+	canvas.draw(trialInfo["black"]); // MJ: instead of ..."black": if(trialInfo["color"] == "black", trialInfo["black"], else 10 - trialInfo["black"])
 
 	// after 2000 ms the canvas is hidden and the subject can start reading
 	setTimeout(function() {
