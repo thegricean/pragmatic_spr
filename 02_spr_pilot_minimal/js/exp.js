@@ -20,23 +20,32 @@ var initExp = function() {
 		return types;
 	};
 
-	// fun that creates picture - quantifier combinations
+	// function that creates picture - quantifier - colour combinations
 	// returns a list of objects
-	// every object contains num of black circles, num of all circles
+	// every object contains num of black balls, num of all balls
 	// and quantifier
 	// the list of objects is shuffled
-	var generatePQComb = function() {
+	var generatePQCComb = function() {
 		var pictureTypes = generatePictureTypes();
 		var combinations = [];
 		var quantifiers = exp.quantifiers;
 
-		// picture - quantifier combination
 		for (var i = 0; i < pictureTypes.length; i++) {
+			var colours = ["black", "white", "black", "white"];
+
 			for (var j = 0; j < quantifiers.length; j++) {
+
+				// adds the colours
+				var chosenColour = colours[Math.floor(Math.random()*colours.length)];
+				var forDeletion = colours.indexOf(chosenColour);
+				if (forDeletion != -1) {
+					colours.splice(forDeletion, 1)
+				}
 				combinations.push({
 					all: pictureTypes[i].all,
 					black: pictureTypes[i].black,
-					quantifier: quantifiers[j]
+					quantifier: quantifiers[j],
+					colour: chosenColour
 				});
 			}
 		}
@@ -60,22 +69,7 @@ var initExp = function() {
 		return comb;
 	};
 
-	// func that adds targert colours to the trial object
-	var addTargetColours = function() {
-		combinations = generatePQComb();
-
-		for (var i = 0; i < combinations.length; i++) {
-			if (i < (combinations.length/2)) {
-				combinations[i].colour = "black";
-			} else {
-				combinations[i].colour = "white";			
-			}
-		}
-
-		return shuffleComb(combinations);
-	};
-
-	exp.data = addTargetColours();
+	exp.data = generatePQCComb();
 	exp.subjInfo = {};
 
 	exp.addSubjInfo = function(info) {
