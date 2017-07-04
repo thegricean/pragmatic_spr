@@ -10,8 +10,16 @@ with open("data/test_results.csv", "w") as f:
 	writer.writerow(["white_balls", "black_balls", "quantifier", "colour"])
 
 	for line in data:
-		writer.writerow([
-			line["all"] - line["black"],
-			line["black"],
-			line["quantifier"],
-			line["colour"]])
+
+		if (line["colour"] == "white"):
+			writer.writerow([
+				line["TCBalls"],
+				line["OCBalls"],
+				line["quantifier"],
+				line["colour"]])
+		else:
+			writer.writerow([
+				line["OCBalls"],
+				line["TCBalls"],
+				line["quantifier"],
+				line["colour"]])
