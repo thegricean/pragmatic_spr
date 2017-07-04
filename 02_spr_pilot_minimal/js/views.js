@@ -98,14 +98,14 @@ var initTrialView = function(trialInfo) {
 	view.deltas = [];
 	view.response = [];
 
-	// reading times
+	// list of reading times
 	var rt = [];
 
-	var canvas = initCanvas();
 	var sentence = initSentence();
 	var sentenceList =  sentence.createWordList(
 		trialInfo["quantifier"], 
 		trialInfo["colour"]);
+	var canvas = initCanvas();
 	var rtCount = sentenceList.length;
 
 	var rendered = Mustache.render(view.template, {
@@ -114,7 +114,7 @@ var initTrialView = function(trialInfo) {
 
 	$('#main').html(rendered);
 
-	canvas.draw(trialInfo["black"]); // MJ: instead of ..."black": if(trialInfo["color"] == "black", trialInfo["black"], else 10 - trialInfo["black"])
+	canvas.draw(trialInfo["TCBalls"], trialInfo["colour"]);
 
 	// after 2000 ms the canvas is hidden and the subject can start reading
 	setTimeout(function() {

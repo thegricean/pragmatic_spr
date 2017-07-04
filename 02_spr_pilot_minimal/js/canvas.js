@@ -4,17 +4,26 @@ var initCanvas = function() {
 	// a list that contains circle positions.
 	var coordsCollection = [];
 
-	// func that takes the num of black and white circles
-	// and returns an array with 10 strings "black" and "white"
-	// colours does not need shuffling because
-	// the positions the are drawn is picked at randmon
-	var generateColours = function(numBlack) {
+	// function that takes
+	// numTCBalls: number of target colour balls (int), 
+	// TC: the target colour (string)
+	// OC: the other colour (string)
+	// and returns an array with 10 colour word where
+	// the TC appears numTCBalls times and
+	// the OC 10 - numTCBalls times
+	//
+	// Note: the items in the list are ordered however there is
+	// no need to shuffle the items because
+	// they are drawn at random positions
+	var generateColours = function(numTCBalls, TC, OC) {
 		var colours = [];
-		for (var i=0; i<numBlack; i++) {
-			colours.push("black");
+
+		for (var i = 0; i < numTCBalls; i++) {
+			colours.push(TC);
 		};
-		for (var i=0; i<(10-numBlack); i++) {
-			colours.push("white");
+
+		for (var i = 0; i < (10-numTCBalls); i++) {
+			colours.push(OC);
 		};
 
 		return colours;
@@ -65,18 +74,28 @@ var initCanvas = function() {
 		return coordsCollection;
 	};
 
-	canvas.draw = function(numBlack) {
-		var coloursCollection = generateColours(numBlack);
+
+	// function that creates the image on the canvas
+	// takes two arguments - the number of target colour balls and the target colour
+	canvas.draw = function(numTCBalls, TC) {
 		var coords = getPositions();
-		for (var i=0; i<10; i++) {
+
+		if (TC == "white") {
+			var colours = generateColours(numTCBalls, "white", "black");
+		} else {
+			var colours = generateColours(numTCBalls, "black", "white");
+		}
+
+		for (var i = 0; i < 10; i++) {
 			var canvas = document.getElementById("canvas");
 			var context = canvas.getContext("2d");
+
 			context.beginPath();
-			context.fillStyle = coloursCollection[i];
+			context.fillStyle = colours[i];
 			context.arc(coords[i]["xPos"], coords[i]["yPos"], 15, 0, 2*Math.PI);
 			context.closePath();
 			context.fill();
-		};
+		}
 	};
 
 	canvas.hide = function() {

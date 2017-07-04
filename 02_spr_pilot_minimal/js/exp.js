@@ -1,41 +1,45 @@
 var initExp = function() {
 	var exp = {};
-	exp.circleNumber = 10;
-	exp.quantifierNumber = 4;
+	exp.numOfAllBalls = 10;
+	exp.NumOfQuantifiers = 4;
 	exp.quantifiers = ["Some", "All", "None", "Most"];
 
-	// func that returns the number of the pictures
+	// function that returns the number of the pictures
 	var getPictureNumber = function() {
-		return exp.circleNumber;
+		return exp.numOfAllBalls;
 	};
 
 	// func that returns a list of objects representing every picture type
 	var generatePictureTypes = function() {
-		number = getPictureNumber();
+		var number = getPictureNumber();
 		var types = [];
-		for (var i=0; i<=number; i++) {
-			types.push({black: i, all: number});
+
+		for (var i = 0; i <= number; i ++) {
+			types.push({
+				TCBalls: i,
+				OCBalls: number - i
+			});
 		}
 		
 		return types;
 	};
 
-	// fun that creates picture - quantifier combinations
-	// returns a list of objects
-	// every object contains num of black circles, num of all circles
-	// and quantifier
-	// the list of objects is shuffled
+	// function that creates all the possible picture - quantifier combinations
+	// returns a shuffled list of objects
+	// every object contains
+	// TCBalls: number of target colour balls,
+	// OCBalls: number of other colour balls
+	// quantifier: quantifier
 	var generatePQComb = function() {
 		var pictureTypes = generatePictureTypes();
 		var combinations = [];
 		var quantifiers = exp.quantifiers;
 
-		// picture - quantifier combination
 		for (var i = 0; i < pictureTypes.length; i++) {
 			for (var j = 0; j < quantifiers.length; j++) {
 				combinations.push({
-					all: pictureTypes[i].all,
-					black: pictureTypes[i].black,
+					TCBalls: pictureTypes[i].TCBalls,
+					OCBalls: pictureTypes[i].OCBalls,
 					quantifier: quantifiers[j]
 				});
 			}
@@ -44,7 +48,7 @@ var initExp = function() {
 		return shuffleComb(combinations);
 	};
 
-	// func that takes a list and returns the same list shuffled
+	// function that shuffles the items in a list
 	var shuffleComb = function(comb) {
 		var counter = comb.length;
 
@@ -60,9 +64,11 @@ var initExp = function() {
 		return comb;
 	};
 
-	// func that adds targert colours to the trial object
+	// function that adds target colours to the objects generate PQComb creates
+	// colour: "black" or "white" is added to the object
+	// the returned list of objects is shuffled
 	var addTargetColours = function() {
-		combinations = generatePQComb();
+		var combinations = generatePQComb();
 
 		for (var i = 0; i < combinations.length; i++) {
 			if (i < (combinations.length/2)) {
@@ -75,18 +81,22 @@ var initExp = function() {
 		return shuffleComb(combinations);
 	};
 
+	// trail data contains the quantifier, colour and picture data
 	exp.data = addTargetColours();
 	exp.subjInfo = {};
 
+	// function that collects the subject's info (comments, education, gernder, etc)
 	exp.addSubjInfo = function(info) {
 		exp.subjInfo = info;
 	};
 
+	// function that collects the subject's reading times and responses
 	exp.addResponse = function(trialIndex, response, rt) {
 		exp.data[trialIndex].response = response;
 		exp.data[trialIndex].readingTimes = rt;
 	};
 
+	// functions that converts the data into JSON
 	exp.getJSON = function() {
 		return JSON.stringify({
 			"results": exp.data,
