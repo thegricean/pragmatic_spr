@@ -105,30 +105,57 @@ def create_csv(li, assignment_ids):
 				education = li[assignment]['subjectInfo']['education']
 				comments = li[assignment]['subjectInfo']['comments']
 
-				w.writerow([
-					assignment_id,
-					assignment + 1,
-					trial['all'] - trial['black'],
-					trial['black'],
-					trial['quantifier'],
-					trial['colour'],
-					trial['readingTimes'][0],
-					trial['readingTimes'][1],
-					trial['readingTimes'][2],
-					trial['readingTimes'][3],
-					trial['readingTimes'][4],
-					trial['readingTimes'][5],
-					trial['readingTimes'][6],
-					trial['readingTimes'][7],
-					trial['readingTimes'][8],
-					trial['response'][0],
-					trial['response'][1],
-					age,
-					gender,
-					languages,
-					education,
-					comments
-					])
+				if (trial['colour'] == "white"):
+					w.writerow([
+						assignment_id,
+						assignment + 1,
+						trial['TCBalls'],
+						trial['OCBalls'],
+						trial['quantifier'],
+						trial['colour'],
+						trial['readingTimes'][0],
+						trial['readingTimes'][1],
+						trial['readingTimes'][2],
+						trial['readingTimes'][3],
+						trial['readingTimes'][4],
+						trial['readingTimes'][5],
+						trial['readingTimes'][6],
+						trial['readingTimes'][7],
+						trial['readingTimes'][8],
+						trial['response'][0],
+						trial['response'][1],
+						age,
+						gender,
+						languages,
+						education,
+						comments
+						])
+				else:
+					w.writerow([
+						assignment_id,
+						assignment + 1,
+						trial['OCBalls'],
+						trial['TCBalls'],
+						trial['quantifier'],
+						trial['colour'],
+						trial['readingTimes'][0],
+						trial['readingTimes'][1],
+						trial['readingTimes'][2],
+						trial['readingTimes'][3],
+						trial['readingTimes'][4],
+						trial['readingTimes'][5],
+						trial['readingTimes'][6],
+						trial['readingTimes'][7],
+						trial['readingTimes'][8],
+						trial['response'][0],
+						trial['response'][1],
+						age,
+						gender,
+						languages,
+						education,
+						comments
+						])
+
 
 """
 The cli
