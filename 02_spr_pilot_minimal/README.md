@@ -1,6 +1,11 @@
 Project Structure
 =================
 
+Abbreviations
+
+* TC - target colour
+* OC - other colour
+
 ---
 
 /js/* -- the code follows the MVC pattern.
@@ -32,12 +37,26 @@ Project Structure
 
 ---
 
-index.html - the html of the experiment is here. It contains [mustache templates](https://github.com/janl/mustache.js) which are used for rendering the views.
+* **index.html** - the html of the experiment is here. It contains [mustache templates](https://github.com/janl/mustache.js) which are used for rendering the views.
 
 ---
 
-/css/style.css - some styles that make the website pretty (fonts, sizes, centering, etc.)
+* **/css/style.css** - some styles that make the website pretty (fonts, sizes, centering, etc.)
 
 ---
 
-/images/* - contains the images that are displayed on the website (for example, the logo).
+* **/images/*** - contains the images that are displayed on the website (for example, the logo).
+
+---
+
+* **results/data/*** - contains the results from the experiment in csv format
+
+* **results/scripts/extract_data.py** - turns the mturk's results into csv. The output file is results.csv
+
+	python extract_data.py [filename]
+
+This script creates csv only when the results are downloaded using [the submiterator](https://github.com/feste/Submiterator) because in that case the results come with extra quotes (and are not in json format).
+
+* **results/scripts/json_to_csv.py** - turns json data into csv
+
+* **results/rscripts/*** - contains R scripts for plotting and analysing the data
