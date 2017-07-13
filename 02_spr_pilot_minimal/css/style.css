@@ -234,6 +234,10 @@ aside span {
 
 /* end pause template */
 
+#sentence-cont {
+	border-bottom: 1px solid black;
+}
+
 /* words */
 .spr-word {
 	margin: 0 3px;
