@@ -3,7 +3,7 @@ library(tidyverse)
 library(forcats)
 source("rscripts/helpers.R")
 
-d = read.csv("data/results.csv")
+d = read.csv("data/results2.csv")
 summary(d)
 d$CongruentBalls = ifelse(d$colour == "black", d$black_balls, d$white_balls)
 
