@@ -136,7 +136,7 @@ var initTrialView = function(trialInfo) {
 		}
 	};
 
-	// func that collects rt in ms since 1 Jan 1970 
+	// func that collects rt in ms since 1 Jan 1970 (Unix time)
 	var collectReadingTimes = function() {
 		if (rtCount >= 0) {
 			rt.push(Date.now());

@@ -101,6 +101,7 @@ var initExp = function() {
 
 	// function that collects the subject's reading times and responses
 	exp.addResponse = function(trialIndex, response, rt) {
+		exp.data[trialIndex].trialNumber = trialIndex + 1;
 		exp.data[trialIndex].response = response;
 		exp.data[trialIndex].readingTimes = rt;
 	};
