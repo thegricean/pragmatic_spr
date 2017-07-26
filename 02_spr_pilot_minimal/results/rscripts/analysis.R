@@ -1,10 +1,10 @@
 setwd("~/cogsci/projects/xprag.de/pragmatic_spr/02_spr_pilot_minimal/results/")
+# setwd("~/nightowl/pragmatic_spr/02_spr_pilot_minimal/results/")
 library(tidyverse)
 library(forcats)
 source("rscripts/helpers.R")
 
-#d = read.csv("data/results.csv")
-d = read.csv("data/results2.csv")
+d = read.csv("data/results_60subjects.csv")
 summary(d)
 d$CongruentBalls = ifelse(d$colour == "black", d$black_balls, d$white_balls)
 
@@ -14,7 +14,7 @@ unique(d$comments)
 
 dd = d %>% 
   select(-education,-comments,-languages,-gender,-age,-answer_time,-assignment_id) %>%
-  gather(Region,RT,-subject,-white_balls,-black_balls, -quantifier,-colour,-answer,-CongruentBalls)
+  gather(Region,RT,-subject,-white_balls,-black_balls, -quantifier,-colour,-answer,-CongruentBalls, -trial_number)
 head(dd)
 
 nrow(d)
@@ -28,7 +28,8 @@ dd$CorrectAnswer = ifelse(dd$quantifier == "All" & dd$colour == "black" & dd$bla
                           ifelse(dd$quantifier == "None" & dd$colour == "white" & dd$white_balls == 0, "yes",
                           ifelse(dd$quantifier == "None" & dd$colour == "black" & dd$black_balls == 0, "yes",       
                           ifelse(dd$quantifier == "Most" & dd$colour == "white" & dd$white_balls > 5, "yes",
-                          ifelse(dd$quantifier == "Most" & dd$colour == "black" & dd$black_balls > 5, "yes",                                                        ifelse(dd$quantifier == "Some" & dd$colour == "white" & dd$white_balls > 0, "yes",
+                          ifelse(dd$quantifier == "Most" & dd$colour == "black" & dd$black_balls > 5, "yes",
+                          ifelse(dd$quantifier == "Some" & dd$colour == "white" & dd$white_balls > 0, "yes",
                           ifelse(dd$quantifier == "Some" & dd$colour == "black" & dd$black_balls > 0, "yes",
                                  "no"))))))))
 
@@ -60,6 +61,8 @@ print(paste("excluded",(before-after)/9,"trials with incorrect responses"))
 # exclude RTs that are 3sds away from the mean
 before = nrow(dd)
 dd$logRT = log(dd$RT)
+# ddlogRT has infinite Min and Mean because there are RT that have values of 0 (on line 1465 and 2016 in the csv)
+summary(dd$logRT)
 ggplot(dd, aes(x=RT)) +
   geom_histogram()
 ggplot(dd, aes(x=logRT)) +
@@ -70,14 +73,16 @@ dd = dd %>%
 after = nrow(dd)
 print(paste("excluded",before-after,"data points with RTs more than 3 sds away from mean"))
 
+
 ggplot(dd, aes(x=RT)) +
   geom_histogram()
 ggplot(dd, aes(x=logRT)) +
   geom_histogram()
 
 
-
 ## PLOTS
+
+pdf("plots_60subjects.pdf")
 
 # overall RTs
 agr = dd %>%
@@ -173,4 +178,6 @@ ggplot(agr, aes(x=CongruentBalls,y=Mean,color=quantifier,group=quantifier)) +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
   facet_grid(Region~ResponderType) +
   scale_x_continuous(breaks=seq(0,10,by=1))
+
+dev.off()
 
