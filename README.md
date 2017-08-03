@@ -12,3 +12,13 @@ We are interested in whether manipulating certain experimental design choices ha
 - the co-task, e.g., the question that participants have to answer about the descriptions (truth, adequacy, did a certain word occur, ...)
 - the overal rate with which true and/or felicitous sentences occur in the experiment
 
+## random notes (possible to-do's)
+
+- regression analysis for data from second pilot
+    - check spill-over reagions
+    - check temporal developement (trial effects)
+    - check subjective patterns
+- consider using a "stops making sense task" (Schwarz & Tiemann 2017, "Presupposition Projection in Online
+Processing", JoS, Section 3.3)
+- manipulate proportion of felicitous & infelicitous examples
+
