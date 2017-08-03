@@ -67,4 +67,4 @@ This script creates csv only when the results are downloaded using [the submiter
 
 	run analysis.R to generate R plots from a csv. The location of the file from which the plots are generated, might need to be changed (line 1).
 
-* **results/plots/*** - contains generated plots from analysis.R
+* **results/graphs/*** - contains generated graphs from analysis.R
