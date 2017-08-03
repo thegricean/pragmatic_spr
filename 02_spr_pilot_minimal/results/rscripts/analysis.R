@@ -39,14 +39,14 @@ nrow(dd)
 resptype = dd %>% 
   filter(CongruentBalls == 10 & quantifier == "Some") 
 rtype = as.data.frame(table(resptype$subject,resptype$answer))
-rtype # looks like in this task people are completely consistent in giving pragmatic or semantic responses
+rtype # looks like in this task people are completely consistent in giving pragmatic or semantic responses -- but that's just because there are 9 data points per trial, and people only saw one underinformative "some" trial
 rtype = rtype[rtype$Var2 == "no" & rtype$Freq > 0,]
 preponders = rtype$Var1
 #print(paste("pragmatic responders: ",preponders))
 dd$ResponderType = as.factor(ifelse(dd$subject %in% preponders, "pragmatic","semantic"))
 print(prop.table(table(dd$ResponderType)))
 
-# exclude data points where incorrect answer was given (but not where people responded pragmatically to "some" (>5) or "most" (==10))
+# exclude data points where incorrect answer was given (but not where people responded pragmatically to "some" (>5 or == 1) or "most" (==10))
 dd$CorrectAnswerGiven = ifelse(dd$answer == dd$CorrectAnswer, "correct/semantic","incorrect/pragmatic")
 table(dd$CorrectAnswerGiven,dd$quantifier)
 table(dd$CorrectAnswerGiven,dd$CongruentBalls)
@@ -56,12 +56,18 @@ before = nrow(dd)
 dd = dd %>%
   filter(CorrectAnswerGiven == "correct/semantic" | quantifier  == "Most" & CongruentBalls == 10 | quantifier  == "Some" & CongruentBalls > 5)
 after = nrow(dd)
-print(paste("excluded",(before-after)/9,"trials with incorrect responses"))
+print(paste("excluded",(before-after)/9,"of",before/9,"trials with incorrect responses (",round(((before-after)/9)*100/(before/9),2),"%)"))
 
-# exclude RTs that are 3sds away from the mean
+# exclude RTs that are 0
+before = nrow(dd)
+dd = dd %>%
+  filter(RT > 0)
+after = nrow(dd)
+print(paste("excluded",before-after,"data points with RTs == 0"))
+
+# exclude RTs that are 3sds away from the mean  
 before = nrow(dd)
 dd$logRT = log(dd$RT)
-# ddlogRT has infinite Min and Mean because there are RT that have values of 0 (on line 1465 and 2016 in the csv)
 summary(dd$logRT)
 ggplot(dd, aes(x=RT)) +
   geom_histogram()
@@ -82,8 +88,6 @@ ggplot(dd, aes(x=logRT)) +
 
 ## PLOTS
 
-pdf("plots_60subjects.pdf")
-
 # overall RTs
 agr = dd %>%
   group_by(Region) %>%
@@ -95,6 +99,7 @@ ggplot(agr, aes(x=Region,y=Mean,group=1)) +
   geom_point() +
   geom_line() +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25)
+ggsave("graphs/rt_overall.pdf",width=6)
 
 # overall RTs by correct answer (yes, no)
 agr = dd %>%
@@ -106,6 +111,7 @@ ggplot(agr, aes(x=Region,y=Mean,color=CorrectAnswer,group=CorrectAnswer)) +
   geom_point() +
   geom_line() +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25)
+ggsave("graphs/rt_overall_correct.pdf",width=7)
 
 # overall RTs by correct answer and quantifier
 agr = dd %>%
@@ -118,6 +124,7 @@ ggplot(agr, aes(x=Region,y=Mean,color=CorrectAnswer,group=CorrectAnswer)) +
   geom_line() +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
   facet_wrap(~quantifier)
+ggsave("graphs/rt_correct_quant.pdf",width=8,height=5)
 
 # overall RTs by correct answer and quantifier and # of color-congruent balls
 agr = dd %>%
@@ -130,6 +137,7 @@ ggplot(agr, aes(x=Region,y=Mean,color=CorrectAnswer,group=CorrectAnswer)) +
   geom_line() +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
   facet_grid(quantifier~CongruentBalls)
+ggsave("graphs/rt_correct_quant_num.pdf",width=18,height=7)
 
 # plot only quantifier and color region
 agr = dd %>%
@@ -146,10 +154,11 @@ ggplot(agr, aes(x=Region,y=Mean,color=CorrectAnswer,group=CorrectAnswer)) +
 
 ggplot(agr, aes(x=CongruentBalls,y=Mean,color=quantifier,group=quantifier)) +
   geom_point() +
-  geom_line(size=2) +
+  geom_line(size=1) +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
-  facet_wrap(~Region) +
+  facet_grid(quantifier~Region) +
   scale_x_continuous(breaks=seq(0,10,by=1))
+ggsave("graphs/rt_correct_quant_num_regions.pdf",width=8,height=8)
 
 # plot only quantifier and color region and respondertype
 agr = dd %>%
@@ -158,12 +167,13 @@ agr = dd %>%
   summarise(Mean=mean(RT),CILow=ci.low(RT),CIHigh=ci.high(RT)) %>%
   mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
 
-ggplot(agr, aes(x=CongruentBalls,y=Mean,color=quantifier,group=quantifier)) +
+ggplot(agr, aes(x=CongruentBalls,y=Mean,color=ResponderType,group=ResponderType)) +
   geom_point() +
   geom_line(size=2) +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
-  facet_grid(Region~ResponderType) +
+  facet_grid(Region~quantifier) +
   scale_x_continuous(breaks=seq(0,10,by=1))
+ggsave("graphs/rt_rtype_quant_num_regions.pdf",width=12,height=7)
 
 # plot only quantifier and color region and respondertype (log rts)
 agr = dd %>%
@@ -172,12 +182,82 @@ agr = dd %>%
   summarise(Mean=mean(logRT),CILow=ci.low(logRT),CIHigh=ci.high(logRT)) %>%
   mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
 
-ggplot(agr, aes(x=CongruentBalls,y=Mean,color=quantifier,group=quantifier)) +
+ggplot(agr, aes(x=CongruentBalls,y=Mean,color=ResponderType,group=ResponderType)) +
   geom_point() +
   geom_line(size=2) +
   geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
-  facet_grid(Region~ResponderType) +
+  facet_grid(Region~quantifier) +
   scale_x_continuous(breaks=seq(0,10,by=1))
+ggsave("graphs/logrt_rtype_quant_num_regions.pdf",width=12,height=7)
 
-dev.off()
+# plot only quantifier and color region and respondertype (log rts) by experiment half
+dd$Half = as.factor(ifelse(dd$trial_number < 23, 1, 2))
+dd$Quarter = as.factor(ifelse(dd$trial_number < 12, "1", "2-4"))
+agr = dd %>%
+  filter(Region %in% c("QUANT","TGW")) %>%
+  group_by(Region,quantifier,CongruentBalls,ResponderType,Half) %>%
+  summarise(Mean=mean(logRT),CILow=ci.low(logRT),CIHigh=ci.high(logRT)) %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
 
+ggplot(agr, aes(x=CongruentBalls,y=Mean,color=ResponderType,linetype=Half)) +
+  geom_point() +
+  geom_line(size=2) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
+  facet_grid(Region~quantifier) +
+  scale_x_continuous(breaks=seq(0,10,by=1))
+ggsave("graphs/logrt_rtype_quant_num_regions_half.pdf",width=12,height=7)
+
+# plot only quantifier and color region (log rts) by experiment half
+agr = dd %>%
+  filter(Region %in% c("QUANT","TGW")) %>%
+  group_by(Region,quantifier,CongruentBalls,Half) %>%
+  summarise(Mean=mean(logRT),CILow=ci.low(logRT),CIHigh=ci.high(logRT)) %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(agr, aes(x=CongruentBalls,y=Mean,color=Half,group=Half)) +
+  geom_point() +
+  geom_line(size=2) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
+  facet_grid(Region~quantifier) +
+  scale_x_continuous(breaks=seq(0,10,by=1))
+ggsave("graphs/logrt_quant_num_regions_half.pdf",width=12,height=7)
+
+# by quarter
+agr = dd %>%
+  filter(Region %in% c("QUANT","TGW")) %>%
+  group_by(Region,quantifier,CongruentBalls,ResponderType,Quarter) %>%
+  summarise(Mean=mean(logRT),CILow=ci.low(logRT),CIHigh=ci.high(logRT)) %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(agr, aes(x=CongruentBalls,y=Mean,color=ResponderType,linetype=Quarter)) +
+  geom_point() +
+  geom_line(size=2) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
+  facet_grid(Region~quantifier) +
+  scale_x_continuous(breaks=seq(0,10,by=1))
+ggsave("graphs/logrt_rtype_quant_num_regions_quarter.pdf",width=12,height=7)
+
+agr = dd %>%
+  filter(Region %in% c("QUANT","TGW")) %>%
+  group_by(Region,quantifier,CongruentBalls,Quarter) %>%
+  summarise(Mean=mean(logRT),CILow=ci.low(logRT),CIHigh=ci.high(logRT)) %>%
+  mutate(YMin=Mean-CILow,YMax=Mean+CIHigh)
+
+ggplot(agr, aes(x=CongruentBalls,y=Mean,color=Quarter,group=Quarter)) +
+  geom_point() +
+  geom_line(size=2) +
+  geom_errorbar(aes(ymin=YMin,ymax=YMax),width=.25) +
+  facet_grid(Region~quantifier) +
+  scale_x_continuous(breaks=seq(0,10,by=1))
+ggsave("graphs/logrt_quant_num_regions_quarter.pdf",width=12,height=7)
+
+qregion = dd %>%
+  filter(Region == "QUANT")
+m = lmer(logRT ~ quantifier*CongruentBalls*ResponderType + trial_number + (1|subject),data=qregion)
+summary(m)
+
+table(dd$quantifier,dd$CongruentBalls,dd$ResponderType,dd$Region)
+
+ggplot(dd, aes(x=logRT)) +
+  geom_histogram() +
+  facet_wrap(~subject)
