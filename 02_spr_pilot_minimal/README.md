@@ -51,6 +51,10 @@ Abbreviations
 
 * **results/data/*** - contains the results from the experiment in csv format
 
+	results_60subjects.csv - data from the full version of the study
+	results_9subjects.csv - data from the test version of the study
+	results_incorrect_exp_design.csv - data from the version with the wrong experiment design
+
 * **results/scripts/extract_data.py** - turns the mturk's results into csv. The output file is results.csv
 
 	python extract_data.py [filename]
@@ -60,3 +64,7 @@ This script creates csv only when the results are downloaded using [the submiter
 * **results/scripts/json_to_csv.py** - turns json data into csv
 
 * **results/rscripts/*** - contains R scripts for plotting and analysing the data
+
+	run analysis.R to generate R plots from a csv. The location of the file from which the plots are generated, might need to be changed (line 1).
+
+* **results/plots/*** - contains generated plots from analysis.R
